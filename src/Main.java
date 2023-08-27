@@ -7,12 +7,15 @@ public class Main {
 		Cpu_6502 myCPU=new Cpu_6502();
 		byte [] ram=new byte[64000];
 		
-		ram[0x0600]=(byte) 169;
-		ram[0x601]=(byte) 30;
-		ram[0x602]=(byte) 0x48;
-		ram[0x0603]=(byte) 169;
-		ram[0x604]=(byte) 0;
-		ram[0x605]=(byte) 0x68;
+		ram[0x0600]=(byte) 0xa2;
+		ram[0x0601]=(byte) 1;
+		ram[0x0602]=(byte) 0xca;
+		ram[0x0603]=(byte) 0xca;
+		ram[0x0604]=(byte) 0xa0;
+		ram[0x0605]=(byte) 1;
+		ram[0x0606]=(byte) 0x88;
+		ram[0x0607]=(byte) 0x88;
+
 	
 		myCPU.execute(ram,0x600);
 		System.out.println(myCPU.getP().printStatus());

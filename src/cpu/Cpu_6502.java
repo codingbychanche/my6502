@@ -341,6 +341,54 @@ public class Cpu_6502 {
 				this.pc++;
 			}
 			break;
+		
+		// dex
+		// N,Z
+		case 0xca:
+			if (doExecute) {
+				this.x--;
+				if (this.x==-1)
+					this.x=255;
+				if (x==0)
+					this.P.Z=1;
+				else
+					this.P.Z=0;
+				if (this.x>=0 && x<=127)
+					this.P.N=0;
+				else 
+					this.P.N=1;
+				this.pc++;
+			}else {
+				diassembled.append(
+						String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex\n");
+				this.pc++;
+			}
+			break;
+			
+			// dey
+			// N,Z
+			case 0x88:
+				if (doExecute) {
+					this.y--;
+					if (this.y==-1)
+						this.y=255;
+					if (this.y==0)
+						this.P.Z=1;
+					else
+						this.P.Z=0;
+					if (this.y>=0 && this.y<=127)
+						this.P.N=0;
+					else 
+						this.P.N=1;
+					this.pc++;
+				}else {
+					diassembled.append(
+							String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey\n");
+					this.pc++;
+				}
+				break;
+				
+			
 
 		// lda #b
 		// Z,N Flags
@@ -367,6 +415,19 @@ public class Cpu_6502 {
 				diassembled.append(String.format("$%02x", this.ram[this.pc]) + "\n");
 				this.pc++;
 			}
+			break;
+			
+		// bne
+		// No flags...
+		case 0xd0:
+			if (doExecute) {
+				
+				
+			}else {
+				
+			}
+			
+			
 			break;
 		}
 	}
