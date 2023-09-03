@@ -72,6 +72,7 @@ public class Cpu_6502 {
 			return s;
 		}
 	}
+
 	public ProcessorStatus P;
 
 	/**
@@ -109,9 +110,9 @@ public class Cpu_6502 {
 	/**
 	 * Diassembles the ram contents.
 	 * 
-	 * @param ram Specifed ram.
+	 * @param ram   Specifed ram.
 	 * @param start Start address.
-	 * @param end End address.
+	 * @param end   End address.
 	 * @return The diassemble source code listing.
 	 */
 	public String dissasemble(byte[] ram, int start, int end) {
@@ -131,11 +132,11 @@ public class Cpu_6502 {
 	 * 
 	 * Either executes an command or returns the associated mnomic.
 	 * 
-	 * @param command The binary code of the 6502 command 
+	 * @param command   The binary code of the 6502 command
 	 * @param doExecute Execute=true, Diassemble=false....
 	 */
 	private void parser(int command, boolean doExecute) {
-		
+
 		switch (command) {
 
 		// brk
@@ -269,7 +270,7 @@ public class Cpu_6502 {
 		// A,Z and N.
 		case 0x68:
 			if (doExecute) {
-				a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK-s)]);
+				a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK - s)]);
 
 				if (a == 0)
 					P.Z = 1;
@@ -341,95 +342,161 @@ public class Cpu_6502 {
 				this.pc++;
 			}
 			break;
-		
+
 		// dex
 		// N,Z
 		case 0xca:
 			if (doExecute) {
 				this.x--;
-				if (this.x==-1)
-					this.x=255;
-				if (x==0)
-					this.P.Z=1;
+				if (this.x == -1)
+					this.x = 255;
+				if (x == 0)
+					this.P.Z = 1;
 				else
-					this.P.Z=0;
-				if (this.x>=0 && x<=127)
-					this.P.N=0;
-				else 
-					this.P.N=1;
+					this.P.Z = 0;
+				if (this.x >= 0 && x <= 127)
+					this.P.N = 0;
+				else
+					this.P.N = 1;
 				this.pc++;
-			}else {
-				diassembled.append(
-						String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex\n");
+			} else {
+				diassembled.append(String.format("$%04x", this.pc)
+						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex\n");
 				this.pc++;
 			}
 			break;
-			
-			// dey
-			// N,Z
-			case 0x88:
-				if (doExecute) {
-					this.y--;
-					if (this.y==-1)
-						this.y=255;
-					if (this.y==0)
-						this.P.Z=1;
-					else
-						this.P.Z=0;
-					if (this.y>=0 && this.y<=127)
-						this.P.N=0;
-					else 
-						this.P.N=1;
-					this.pc++;
-				}else {
-					diassembled.append(
-							String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey\n");
-					this.pc++;
-				}
-				break;
-				
-			
+
+		// dey
+		// N,Z
+		case 0x88:
+			if (doExecute) {
+				this.y--;
+				if (this.y == -1)
+					this.y = 255;
+				if (this.y == 0)
+					this.P.Z = 1;
+				else
+					this.P.Z = 0;
+				if (this.y >= 0 && this.y <= 127)
+					this.P.N = 0;
+				else
+					this.P.N = 1;
+				this.pc++;
+			} else {
+				diassembled.append(String.format("$%04x", this.pc)
+						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey\n");
+				this.pc++;
+			}
+			break;
 
 		// lda #b
 		// Z,N Flags
 		case 169:
 			if (doExecute) {
 				this.pc++;
-				a = unsignedByte(this.ram[pc]);
+				this.a = unsignedByte(this.ram[pc]);
 
-				if (a == 0)
+				if (this.a == 0)
 					P.Z = 1;
 				else
 					P.Z = 0;
 
-				if (a > 127)
+				if (this.a > 127)
 					P.N = 1;
 				else
 					P.N = 0;
 				this.pc++;
 
 			} else {
-				diassembled.append(
-						String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " lda #");
+				diassembled.append(String.format("$%04x", this.pc)
+						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " lda #");
 				this.pc++;
 				diassembled.append(String.format("$%02x", this.ram[this.pc]) + "\n");
 				this.pc++;
 			}
 			break;
-			
+
 		// bne
+		// Branch on result not zero.
 		// No flags...
 		case 0xd0:
 			if (doExecute) {
-				
-				
-			}else {
-				
+
+				// pc already points to the current instruction. Now get the argument.
+				this.pc++;
+				int b = this.ram[pc];
+
+				// What ever the result of the previous instruction was, if it was zero
+				// we do not branch!
+				if (this.P.Z != 1) {
+
+					// Currently pc points to the argument, not the instruction
+					// so we have to correct that.
+					b++;
+					
+					// The target address of the branchis now calculated by subtracting
+					// b from the address of the instruction.
+					this.pc = this.pc + b;
+				}
+				// No branch!
+				else
+					// Next instruction.
+					this.pc++;
+
+			} else {
+				diassembled.append(String.format("$%04x", this.pc)
+						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " bne ");
+				this.pc++;
+				byte b = this.ram[this.pc];
+
+				b++;
+
+				diassembled.append(String.format("$%04x", this.pc + (b + 1)) + "\n");
+				this.pc++; // Get next instruction.
+
 			}
-			
-			
+
 			break;
 		}
+	}
+
+	/**
+	 * Two's complement
+	 * 
+	 * This checks if an integer contains a 8- Bit number which is bigger than 127,
+	 * meanig it is a negative number.
+	 * </p>
+	 * 
+	 * If so the following function is applied: b=b EOR 255:
+	 * </p>
+	 * 
+	 * <b>Expample:</b>
+	 * </p>
+	 * 
+	 * 00000101 = 5<br>
+	 * 11111010 =-5
+	 * </p>
+	 * 
+	 * If the parameter passed is negative it is converted and the nagative value
+	 * returned.
+	 * </p>
+	 * 
+	 * Java's byte works that way and one does not need this method to distinguish
+	 * wether an byte value is positive or negative.
+	 * </p>
+	 * 
+	 * 
+	 * @param b Number to check/ convert.
+	 * @return Converted integer.
+	 */
+
+	public int complement(int b) {
+		if (b < 127)
+			b = pc + b;
+		else {
+			b = (b ^ 255 * -1) + this.pc;
+		}
+		return b;
 	}
 
 	/**
