@@ -27,6 +27,11 @@ public class Cpu_6502 {
 	private byte[] ram;
 
 	//
+	// Virtual machine this processor is connected to..
+	//
+	VirtualMachine vt;
+
+	//
 	// Source
 	//
 	StringBuilder diassembled;
@@ -72,14 +77,14 @@ public class Cpu_6502 {
 			return s;
 		}
 	}
-
 	public ProcessorStatus P;
 
 	/**
 	 * A new 6502- Processor.
 	 * 
 	 */
-	public Cpu_6502() {
+	public Cpu_6502(VirtualMachine vt) {
+		this.vt = vt;
 		this.P = new ProcessorStatus();
 	}
 
@@ -94,7 +99,6 @@ public class Cpu_6502 {
 	public byte[] execute(byte[] ram, int address) {
 
 		this.ram = ram;
-
 		this.pc = address;
 
 		//
@@ -103,6 +107,8 @@ public class Cpu_6502 {
 		while (P.B != 1) {
 			int command = unsignedByte(this.ram[pc]);
 			parser(command, EXECUTE);
+			vt.getProcessorState(this.P.printStatus());
+
 		}
 		return this.ram;
 	}
@@ -433,7 +439,7 @@ public class Cpu_6502 {
 					// Currently pc points to the argument, not the instruction
 					// so we have to correct that.
 					b++;
-					
+
 					// The target address of the branchis now calculated by subtracting
 					// b from the address of the instruction.
 					this.pc = this.pc + b;
@@ -451,7 +457,7 @@ public class Cpu_6502 {
 
 				b++;
 
-				diassembled.append(String.format("$%04x", this.pc + (b + 1)) + "\n");
+				diassembled.append(String.format("$%04x", this.pc + b) + "\n");
 				this.pc++; // Get next instruction.
 
 			}
