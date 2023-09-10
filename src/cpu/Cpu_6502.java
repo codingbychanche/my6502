@@ -94,12 +94,14 @@ public class Cpu_6502 {
 	 * 
 	 * @param ram     Asscoiated ram.
 	 * @param address The address from where to run....
+	 * @param clockSpeed The speed which each cycle takes in [ms]
 	 * @return The resulting ram contents.
 	 */
-	public byte[] execute(byte[] ram, int address) {
+	public byte[] execute(byte[] ram, int address,long clockSpeed) {
 
 		this.ram = ram;
 		this.pc = address;
+		this.diassembled=new StringBuilder(); // FIND ANOTHER WAY THAN USING THIS GLOBAL VAR....	
 
 		//
 		// Parse
@@ -107,7 +109,20 @@ public class Cpu_6502 {
 		while (P.B != 1) {
 			int command = unsignedByte(this.ram[pc]);
 			parser(command, EXECUTE);
-			vt.getProcessorState(this.P.printStatus());
+			vt.getProcessorState(String.format("$%02x",command)+"     "+ this.P.printStatus());
+			
+			//
+			// Whait to emulate the speed of the cpu...
+			//	
+			// THIS HAS TO BE CHANGED. 
+			// IN ORDER TO EMULATE CORRECTLY A DEDICETD METHOD WHICH INCREASES 
+			// THE PC AND THEN WAITS HAS TO BE IMPLEMENTED. THIS WAY EACH
+			// AFTER EACH CYCLE THERE IS A PAUSE AND NOT AFTER EACH COMMAND....
+			//
+			try {
+				Thread.sleep(clockSpeed);
+			} catch (Exception e) {
+			}
 
 		}
 		return this.ram;
@@ -132,7 +147,7 @@ public class Cpu_6502 {
 		}
 		return diassembled.toString();
 	}
-
+	
 	/**
 	 * 6502
 	 * 

@@ -12,6 +12,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 	private byte[] ram;
 	private Cpu_6502 cpu;
+	private long clockSpeed;
 
 	/**
 	 * Creates a new virtual machine.
@@ -28,7 +29,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 * Executor....
 	 * 
 	 */
-	public void run() {
+	public void run(long clockSpeed) {
+		this.clockSpeed = clockSpeed;
 
 		Thread t = new Thread(new Runnable() {
 
@@ -39,10 +41,10 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				ram[0x0603] = (byte) 0xd0;
 				ram[0x0604] = (byte) 0xfd;
 
-				cpu.execute(ram, 0x600);
+				cpu.execute(ram, 0x600,clockSpeed);
 
 			}
-			
+
 		});
 		t.start();
 
@@ -52,7 +54,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		// System.out.println(cpu.dissasemble(ram, 0x0600, 0x0610));
 
 	}
-	
+
 	/**
 	 * Receieves status of the currently executed instrucrion from the cpu...
 	 * 
@@ -61,6 +63,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	@Override
 	public void getProcessorState(String s) {
 		System.out.println(s);
+
 	}
 
 }
