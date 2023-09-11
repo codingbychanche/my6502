@@ -40,7 +40,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				ram[0x0602] = (byte) 0xca;
 				ram[0x0603] = (byte) 0xd0;
 				ram[0x0604] = (byte) 0xfd;
-
+				ram[0x0605]=(byte) 0xa9;
+				ram[0x0606]=(byte) 0xff;
 				cpu.execute(ram, 0x600,clockSpeed);
 
 			}
@@ -64,6 +65,11 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public void getProcessorState(String s) {
 		System.out.println(s);
 
+	}
+	
+	@Override
+	public void getComandExecuted (String s){
+		System.out.println(s);
 	}
 
 }

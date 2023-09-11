@@ -62,9 +62,9 @@ public class Cpu_6502 {
 		 * @return A string containing a human readable form of the register contents.
 		 */
 		public String printStatus() {
-			return (String.format("PC=$%04x", pc) + String.format(" SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N
-					+ " V=" + V + " -=" + U + " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a
-					+ " X=" + x + " Y=" + y + String.format(" // Status=$%02x", getStatusRegister()));
+			return (String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U + " B="
+					+ B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a + " X=" + x + " Y=" + y
+					+ String.format(" // Status=$%02x", getStatusRegister()));
 		}
 
 		/**
@@ -77,6 +77,7 @@ public class Cpu_6502 {
 			return s;
 		}
 	}
+
 	public ProcessorStatus P;
 
 	/**
@@ -92,30 +93,30 @@ public class Cpu_6502 {
 	 * Executes a series of commands, stored from start address upwards in specified
 	 * ram.
 	 * 
-	 * @param ram     Asscoiated ram.
-	 * @param address The address from where to run....
+	 * @param ram        Asscoiated ram.
+	 * @param address    The address from where to run....
 	 * @param clockSpeed The speed which each cycle takes in [ms]
 	 * @return The resulting ram contents.
 	 */
-	public byte[] execute(byte[] ram, int address,long clockSpeed) {
+	public byte[] execute(byte[] ram, int address, long clockSpeed) {
 
 		this.ram = ram;
 		this.pc = address;
-		this.diassembled=new StringBuilder(); // FIND ANOTHER WAY THAN USING THIS GLOBAL VAR....	
+		this.diassembled = new StringBuilder(); // FIND ANOTHER WAY THAN USING THIS GLOBAL VAR....
 
 		//
 		// Parse
 		//
 		while (P.B != 1) {
 			int command = unsignedByte(this.ram[pc]);
-			parser(command, EXECUTE);
-			vt.getProcessorState(String.format("$%02x",command)+"     "+ this.P.printStatus());
-			
+			parser(command);
+			vt.getProcessorState(this.P.printStatus());
+
 			//
 			// Whait to emulate the speed of the cpu...
-			//	
-			// THIS HAS TO BE CHANGED. 
-			// IN ORDER TO EMULATE CORRECTLY A DEDICETD METHOD WHICH INCREASES 
+			//
+			// THIS HAS TO BE CHANGED.
+			// IN ORDER TO EMULATE CORRECTLY A DEDICETD METHOD WHICH INCREASES
 			// THE PC AND THEN WAITS HAS TO BE IMPLEMENTED. THIS WAY EACH
 			// AFTER EACH CYCLE THERE IS A PAUSE AND NOT AFTER EACH COMMAND....
 			//
@@ -129,26 +130,6 @@ public class Cpu_6502 {
 	}
 
 	/**
-	 * Diassembles the ram contents.
-	 * 
-	 * @param ram   Specifed ram.
-	 * @param start Start address.
-	 * @param end   End address.
-	 * @return The diassemble source code listing.
-	 */
-	public String dissasemble(byte[] ram, int start, int end) {
-		this.ram = ram;
-		this.pc = start; // Set start, is updated py parser...
-		this.diassembled = new StringBuilder();
-
-		while (this.pc != end) {
-			int command = unsignedByte(this.ram[this.pc]);
-			parser(command, DIASSEMBLE);
-		}
-		return diassembled.toString();
-	}
-	
-	/**
 	 * 6502
 	 * 
 	 * Either executes an command or returns the associated mnomic.
@@ -156,7 +137,9 @@ public class Cpu_6502 {
 	 * @param command   The binary code of the 6502 command
 	 * @param doExecute Execute=true, Diassemble=false....
 	 */
-	private void parser(int command, boolean doExecute) {
+	private void parser(int command) {
+
+		String com;
 
 		switch (command) {
 
@@ -166,256 +149,232 @@ public class Cpu_6502 {
 		// push status flag
 		//
 		case 0x00:
-			if (doExecute) {
-				P.B = 1;
-				s++;
-				this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // Low byte of retuirn address ??
-				s++;
-				this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // High byte of return address ??
-				s++;
-				this.ram[START_ADDRESS_OF_STACK - s] = (byte) (P.getStatusRegister());
-				// this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk\n");
-				this.pc++;
-			}
+
+			P.B = 1;
+			s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // Low byte of retuirn address ??
+			s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // High byte of return address ??
+			s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) (P.getStatusRegister());
+			// this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk");
 			break;
 
 		// clc
 		// Carry flag
 		case 0x18:
-			if (doExecute) {
-				P.C = 0;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " clc\n");
-				this.pc++;
-			}
+
+			P.C = 0;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " clc");
 			break;
 
 		// sec
 		// Carry flag
 		case 0x38:
-			if (doExecute) {
-				P.C = 1;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " sec\n");
-				this.pc++;
-			}
+
+			P.C = 1;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " sec");
 			break;
 
 		// cli
 		// Interrupt flag
 		case 0x58:
-			if (doExecute) {
-				P.I = 0;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " cli\n");
-				this.pc++;
-			}
+
+			P.I = 0;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " cli");
 			break;
 
 		// sei
 		// Interrupt flag
 		case 0x78:
-			if (doExecute) {
-				P.I = 1;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " sei\n");
-				this.pc++;
-			}
+
+			P.I = 1;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " sei");
 			break;
 
 		// clv
 		// Overflow flag
 		case 0xb8:
-			if (doExecute) {
-				P.V = 0;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " clv\n");
-				this.pc++;
-			}
+
+			P.V = 0;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " clv");
 			break;
 
 		// cld
 		// Decimal flag
 		case 0xd8:
-			if (doExecute) {
-				P.D = 0;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " cld\n");
-				this.pc++;
-			}
+
+			P.D = 0;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " cld");
+
 			break;
 
 		// sed
 		// decimal flag
 		case 0xf8:
-			if (doExecute) {
-				P.D = 1;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[pc]))
-						+ " sed\n");
-				this.pc++;
-			}
+
+			P.D = 1;
+			this.pc++;
+
+			this.vt.getComandExecuted(
+					String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(this.ram[pc])) + " sed");
+
 			break;
 
 		// pha
 		//
 		case 0x48:
-			if (doExecute) {
-				s++;
-				this.ram[START_ADDRESS_OF_STACK - s] = (byte) a;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha\n");
-				this.pc++;
-			}
+
+			s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) a;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha");
 			break;
 
 		// pla
 		// A,Z and N.
 		case 0x68:
-			if (doExecute) {
-				a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK - s)]);
 
-				if (a == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK - s)]);
 
-				if (a > 127)
-					P.N = 1;
-				else
-					P.N = 0;
-				s--;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(ram[this.pc]))
-						+ " pla\n");
-				this.pc++;
-			}
+			if (a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+			s--;
+			this.pc++;
+
+			this.vt.getComandExecuted(
+					String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(ram[this.pc])) + " pla");
 			break;
 
 		// ldy #b
 		// Z,N Flags
 		case 0xa0:
-			if (doExecute) {
-				this.pc++;
-				y = unsignedByte(this.ram[this.pc]);
 
-				if (y == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " ldy #";
 
-				if (y > 127)
-					P.N = 1;
-				else
-					P.N = 0;
-				this.pc++;
+			this.pc++;
+			y = unsignedByte(this.ram[this.pc]);
 
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " ldy #");
-				this.pc++;
-				diassembled.append(String.format("$%02x", this.ram[this.pc]) + "\n");
-				this.pc++;
-			}
+			this.vt.getComandExecuted(com + String.format("$%02x", this.ram[this.pc]));
+
+			if (y == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (y > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+			this.pc++;
+
 			break;
 
 		// ldx #b
 		// Z,N Flags
 		case 0xa2:
-			if (doExecute) {
-				this.pc++;
-				x = unsignedByte(this.ram[this.pc]);
 
-				if (x == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " ldx #";
 
-				if (x > 127)
-					P.N = 1;
-				else
-					P.N = 0;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " ldx #");
-				this.pc++;
-				diassembled.append(String.format("$%02x", this.ram[this.pc]) + "\n");
-				this.pc++;
-			}
+			this.pc++;
+			x = unsignedByte(this.ram[this.pc]);
+
+			this.vt.getComandExecuted(com + String.format("$%02x", this.ram[this.pc]));
+
+			if (x == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (x > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+			this.pc++;
 			break;
 
 		// dex
 		// N,Z
 		case 0xca:
-			if (doExecute) {
-				this.x--;
-				if (this.x == -1)
-					this.x = 255;
-				if (x == 0)
-					this.P.Z = 1;
-				else
-					this.P.Z = 0;
-				if (this.x >= 0 && x <= 127)
-					this.P.N = 0;
-				else
-					this.P.N = 1;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex\n");
-				this.pc++;
-			}
+
+			this.x--;
+			if (this.x == -1)
+				this.x = 255;
+			if (x == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+			if (this.x >= 0 && x <= 127)
+				this.P.N = 0;
+			else
+				this.P.N = 1;
+			
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex");
+			this.pc++;
+			
 			break;
 
 		// dey
 		// N,Z
 		case 0x88:
-			if (doExecute) {
-				this.y--;
-				if (this.y == -1)
-					this.y = 255;
-				if (this.y == 0)
-					this.P.Z = 1;
-				else
-					this.P.Z = 0;
-				if (this.y >= 0 && this.y <= 127)
-					this.P.N = 0;
-				else
-					this.P.N = 1;
-				this.pc++;
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey\n");
-				this.pc++;
-			}
+
+			this.y--;
+			if (this.y == -1)
+				this.y = 255;
+			if (this.y == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+			if (this.y >= 0 && this.y <= 127)
+				this.P.N = 0;
+			else
+				this.P.N = 1;
+			this.pc++;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey");
 			break;
 
 		// lda #b
 		// Z,N Flags
 		case 169:
-			if (doExecute) {
+							
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda #";
 				this.pc++;
 				this.a = unsignedByte(this.ram[pc]);
+
+				this.vt.getComandExecuted(com + String.format("$%02x",this.a));
 
 				if (this.a == 0)
 					P.Z = 1;
@@ -428,54 +387,38 @@ public class Cpu_6502 {
 					P.N = 0;
 				this.pc++;
 
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " lda #");
-				this.pc++;
-				diassembled.append(String.format("$%02x", this.ram[this.pc]) + "\n");
-				this.pc++;
-			}
+	
 			break;
 
 		// bne
 		// Branch on result not zero.
 		// No flags...
 		case 0xd0:
-			if (doExecute) {
 
-				// pc already points to the current instruction. Now get the argument.
-				this.pc++;
-				int b = this.ram[pc];
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " bne ";
 
-				// What ever the result of the previous instruction was, if it was zero
-				// we do not branch!
-				if (this.P.Z != 1) {
+			// pc already points to the current instruction. Now get the argument.
+			this.pc++;
+			int b = this.ram[pc];
 
-					// Currently pc points to the argument, not the instruction
-					// so we have to correct that.
-					b++;
+			// What ever the result of the previous instruction was, if it was zero
+			// we do not branch!
+			if (this.P.Z != 1) {
 
-					// The target address of the branchis now calculated by subtracting
-					// b from the address of the instruction.
-					this.pc = this.pc + b;
-				}
-				// No branch!
-				else
-					// Next instruction.
-					this.pc++;
-
-			} else {
-				diassembled.append(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " bne ");
-				this.pc++;
-				byte b = this.ram[this.pc];
-
+				// Currently pc points to the argument, not the instruction
+				// so we have to correct that.
 				b++;
 
-				diassembled.append(String.format("$%04x", this.pc + b) + "\n");
-				this.pc++; // Get next instruction.
-
+				// The target address of the branchis now calculated by subtracting
+				// b from the address of the instruction.
+				this.pc = this.pc + b;
+				
+				this.vt.getComandExecuted(com + String.format("$%04x", this.pc));
 			}
+			// No branch!
+			else
+				// Next instruction.
+				this.pc++;
 
 			break;
 		}
