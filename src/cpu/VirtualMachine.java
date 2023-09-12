@@ -42,6 +42,10 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				ram[0x0604] = (byte) 0xfd;
 				ram[0x0605]=(byte) 0xa9;
 				ram[0x0606]=(byte) 0xff;
+				ram[0x0607]=(byte) 0x4c;
+				ram [0x0608]=(byte) 0;
+				ram [0x0609]=(byte) 2;
+				
 				cpu.execute(ram, 0x600,clockSpeed);
 
 			}
@@ -49,15 +53,10 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		});
 		t.start();
 
-		// System.out.println(cpu.getP().printStatus());
-		// System.out.println(cpu.dumpStack(ram));
-
-		// System.out.println(cpu.dissasemble(ram, 0x0600, 0x0610));
-
 	}
 
 	/**
-	 * Receieves status of the currently executed instrucrion from the cpu...
+	 * Receieves processor status 
 	 * 
 	 */
 
@@ -66,6 +65,11 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		System.out.println(s);
 
 	}
+	
+	/**
+	 * Receives the opcode and the haman readable instruction
+	 * of the last instruction executed.
+	 */
 	
 	@Override
 	public void getComandExecuted (String s){

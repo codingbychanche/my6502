@@ -9,13 +9,6 @@ package cpu;
 public class Cpu_6502 {
 
 	//
-	// Specifies wether to execute the given code or to build a
-	// source code listing.
-	//
-	private static final boolean EXECUTE = true;
-	private static final boolean DIASSEMBLE = false;
-
-	//
 	// 6502 address space
 	//
 	private static final int START_ADDRESS_OF_STACK = 0x01ff;
@@ -62,8 +55,8 @@ public class Cpu_6502 {
 		 * @return A string containing a human readable form of the register contents.
 		 */
 		public String printStatus() {
-			return (String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U + " B="
-					+ B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a + " X=" + x + " Y=" + y
+			return (String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U
+					+ " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a + " X=" + x + " Y=" + y
 					+ String.format(" // Status=$%02x", getStatusRegister()));
 		}
 
@@ -73,7 +66,7 @@ public class Cpu_6502 {
 		 * @return Status register.
 		 */
 		public byte getStatusRegister() {
-			byte s = (byte) (N * 1 + V * 2 + U * 4 + B * 8 + D * 16 + I * 32 + Z * 64 + C * 128);
+			byte s = (byte) (N * 128 + V * 64 + U * 32 + B * 16 + D * 8 + I * 4 + Z * 1 + C * 1);
 			return s;
 		}
 	}
@@ -107,7 +100,7 @@ public class Cpu_6502 {
 		//
 		// Parse
 		//
-		while (P.B != 1) {
+		while (P.I != 1) {
 			int command = unsignedByte(this.ram[pc]);
 			parser(command);
 			vt.getProcessorState(this.P.printStatus());
@@ -150,7 +143,7 @@ public class Cpu_6502 {
 		//
 		case 0x00:
 
-			P.B = 1;
+			P.I = 1;
 			s++;
 			this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // Low byte of retuirn address ??
 			s++;
@@ -338,11 +331,11 @@ public class Cpu_6502 {
 				this.P.N = 0;
 			else
 				this.P.N = 1;
-			
+
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex");
 			this.pc++;
-			
+
 			break;
 
 		// dey
@@ -369,25 +362,24 @@ public class Cpu_6502 {
 		// lda #b
 		// Z,N Flags
 		case 169:
-							
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda #";
-				this.pc++;
-				this.a = unsignedByte(this.ram[pc]);
 
-				this.vt.getComandExecuted(com + String.format("$%02x",this.a));
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda #";
+			this.pc++;
+			this.a = unsignedByte(this.ram[pc]);
 
-				if (this.a == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			this.vt.getComandExecuted(com + String.format("$%02x", this.a));
 
-				if (this.a > 127)
-					P.N = 1;
-				else
-					P.N = 0;
-				this.pc++;
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
 
-	
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+			this.pc++;
+
 			break;
 
 		// bne
@@ -401,25 +393,41 @@ public class Cpu_6502 {
 			this.pc++;
 			int b = this.ram[pc];
 
+			// Currently pc points to the argument, not the instruction
+			// so we have to correct that.
+			b++;
+			int target = this.pc + b;
+
 			// What ever the result of the previous instruction was, if it was zero
 			// we do not branch!
 			if (this.P.Z != 1) {
 
-				// Currently pc points to the argument, not the instruction
-				// so we have to correct that.
-				b++;
-
-				// The target address of the branchis now calculated by subtracting
+				// The target address of the branch is now calculated by subtracting/ adding
 				// b from the address of the instruction.
 				this.pc = this.pc + b;
-				
-				this.vt.getComandExecuted(com + String.format("$%04x", this.pc));
+
 			}
 			// No branch!
 			else
 				// Next instruction.
 				this.pc++;
 
+			this.vt.getComandExecuted(com + String.format("$%04x", target));
+
+			break;
+
+		// jmp xxxx
+		// Affects only the program counter
+		case 0x4c:
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " jmp ";
+			this.pc++;
+			int low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			int high = unsignedByte(this.ram[pc]);
+			int address = low + 256 * high;
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+			this.pc=address;
+			
 			break;
 		}
 	}

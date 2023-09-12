@@ -7,7 +7,7 @@ public class Main {
 
 		VirtualMachine vt = new VirtualMachine(64000);
 				
-		vt.run(2000);
+		vt.run(1000);
 
 	}
 
