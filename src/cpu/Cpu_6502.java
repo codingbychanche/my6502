@@ -133,6 +133,7 @@ public class Cpu_6502 {
 	private void parser(int command) {
 
 		String com;
+		int address, low, high;
 
 		switch (command) {
 
@@ -239,19 +240,19 @@ public class Cpu_6502 {
 		//
 		case 0x48:
 
-			s++;
-			this.ram[START_ADDRESS_OF_STACK - s] = (byte) a;
+			this.s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.a;
 			this.pc++;
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
-					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha");
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha "+this.dumpStack(ram));
 			break;
 
 		// pla
 		// A,Z and N.
 		case 0x68:
 
-			a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK - s)]);
+			this.a = unsignedByte(this.ram[(START_ADDRESS_OF_STACK - s)]);
 
 			if (a == 0)
 				P.Z = 1;
@@ -262,11 +263,11 @@ public class Cpu_6502 {
 				P.N = 1;
 			else
 				P.N = 0;
-			s--;
+			this.s--;
 			this.pc++;
 
-			this.vt.getComandExecuted(
-					String.format("$%04x", this.pc) + String.format(" $%02x", unsignedByte(ram[this.pc])) + " pla");
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(ram[this.pc])) + " pla " + " // " + this.dumpStack(ram));
 			break;
 
 		// ldy #b
@@ -416,20 +417,89 @@ public class Cpu_6502 {
 
 			break;
 
+		// jsr xxxx
+		// Program counter, stack pointer
+		case 0x20:
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " jsr ";
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			address = low + 256 * high; // Address of subroutine
+
+			// Push return address on the stack, which is the current address
+			// the pc contains (adddress of jsr- instruction +2)
+			//
+			this.s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.high(this.pc);
+			this.s++;
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.low(this.pc);
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address) + " // " + this.dumpStack(ram));
+
+			this.pc = address; // jump to subroutine
+
+			break;
+
+		// rts
+		//
+		case 0x60:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " rts ";
+
+			// pull return address from stack
+			//
+			low = ram[START_ADDRESS_OF_STACK - s];
+			s--;
+			high = ram[START_ADDRESS_OF_STACK - s];
+			s--;
+
+			address = low + 256 * high;
+
+			address++;
+			this.pc = address; // Return
+
+			vt.getComandExecuted(com + " // " + this.dumpStack(ram));
+			break;
+
 		// jmp xxxx
 		// Affects only the program counter
 		case 0x4c:
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " jmp ";
 			this.pc++;
-			int low = unsignedByte(this.ram[pc]);
+			high = unsignedByte(this.ram[pc]);
 			this.pc++;
-			int high = unsignedByte(this.ram[pc]);
-			int address = low + 256 * high;
+			low = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
-			this.pc=address;
-			
+
+			this.pc = address;
+
+			// Inform virtual machine.....
+			vt.jmpAddressTrap(address);
+
 			break;
 		}
+	}
+
+	/**
+	 * HHigh byte part of an 16- bit integer
+	 * 
+	 * @param integer 16- bit integer
+	 * @return High byte part of integer passed
+	 */
+	private int high(int integer) {
+		return integer / 256;
+	}
+
+	/**
+	 * Low byte part of an 16- bit integer
+	 * 
+	 * @param integer 16- bit integer
+	 * @return Low byte part of integer passed
+	 */
+	private int low(int integer) {
+		return integer - this.high(integer);
 	}
 
 	/**

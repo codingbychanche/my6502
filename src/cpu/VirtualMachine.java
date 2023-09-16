@@ -35,17 +35,16 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
-				ram[0x0600] = (byte) 0xa2;
-				ram[0x0601] = (byte) 3;
-				ram[0x0602] = (byte) 0xca;
-				ram[0x0603] = (byte) 0xd0;
-				ram[0x0604] = (byte) 0xfd;
-				ram[0x0605]=(byte) 0xa9;
-				ram[0x0606]=(byte) 0xff;
-				ram[0x0607]=(byte) 0x4c;
-				ram [0x0608]=(byte) 0;
-				ram [0x0609]=(byte) 2;
-				
+				ram[0x0600] = (byte) 0x20;
+				ram[0x0601] = (byte) 0x06;
+				ram[0x0602] = (byte) 0x06;
+				ram[0x0603] = (byte) 0xa9;
+				ram[0x0604] = (byte) 0;
+				ram[0x0605]=(byte) 0;
+				ram[0x0606]=(byte) 0xa9;
+				ram[0x0607]=(byte) 0xff;
+				ram [0x0608]=(byte) 0x60;
+							
 				cpu.execute(ram, 0x600,clockSpeed);
 
 			}
@@ -67,7 +66,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	}
 	
 	/**
-	 * Receives the opcode and the haman readable instruction
+	 * Receives the opcode and the human readable instruction
 	 * of the last instruction executed.
 	 */
 	
@@ -75,5 +74,22 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public void getComandExecuted (String s){
 		System.out.println(s);
 	}
+	
+	@Override
+	public void jmpAddressTrap(int a) {
+		System.out.println("====>>> jmp trapped =>"+a);
+		
+	}
 
+	/**
+	 * This method checks wether an address passed belongs an 
+	 * emulated subroutne or not. If a matching address could be 
+	 * found the subroutine is executed...
+	 * 
+	 * 
+	 * @param address
+	 */
+	private void virtualMachineEmulatedOSRoutines(int address){
+		
+	}
 }
