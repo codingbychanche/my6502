@@ -499,7 +499,7 @@ public class Cpu_6502 {
 	 * @return Low byte part of integer passed
 	 */
 	private int low(int integer) {
-		return integer - this.high(integer);
+		return integer - this.high(integer)*256;
 	}
 
 	/**
