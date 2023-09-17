@@ -36,6 +36,11 @@ public class Cpu_6502 {
 	int pc; // Programm counter always points to the next command to be executed
 	int s = -1; // Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
 
+	// TODO: This is a workaround until hardware/ software interrupts are
+	// implemented and working correctly. This is ste to true, when a brk-instruction
+	// is executed...
+	boolean endEmulation=true;
+	
 	//
 	// The 6502 status register
 	//
@@ -100,7 +105,7 @@ public class Cpu_6502 {
 		//
 		// Parse
 		//
-		while (P.I != 1) {
+		while (endEmulation) {
 			int command = unsignedByte(this.ram[pc]);
 			parser(command);
 			vt.getProcessorState(this.P.printStatus());
@@ -147,7 +152,8 @@ public class Cpu_6502 {
 		// took place, one has the check if the P- register on the stack.
 		// If the B- flag is set => Software intterupt. If not => hardware interrupt.
 		case 0x00:
-		this.P.I=1; // TODO If set, emulation ends... This is not a how the 6502 works....
+		//this.P.I=1; // TODO If set, emulation ends... This is not a how the 6502 works....
+		this.endEmulation=false;
 			
 			// Push pc+2 high, low byte on the stack. Finaly the status register.
 			// TODO Implement hardware interupt behaviour => brk flag of the status register
@@ -428,11 +434,12 @@ public class Cpu_6502 {
 					this.P.N = 0;
 
 				}
+				// TODO Check behaviour of overflow flag
 				// a< -128 or a> 127
-				if (this.a > 127 && this.a <= 255)
-					this.P.V = 0;
-				else
-					this.P.V = 1;
+				//if (this.a > 127 && this.a <= 255)
+					//this.P.V = 0;
+				//	else
+				//this.P.V = 1;
 
 			}
 
