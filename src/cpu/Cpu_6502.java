@@ -43,7 +43,7 @@ public class Cpu_6502 {
 		byte N; // Negative flag
 		byte V; // Overflow flag
 		byte U = 1; // Unused...
-		byte B; // Break flag
+		byte B = 1; // Break flag
 		byte D; // decimal mode flag
 		byte I; // Interrupt disabeled flag
 		byte Z; // Zero flag
@@ -66,7 +66,7 @@ public class Cpu_6502 {
 		 * @return Status register.
 		 */
 		public byte getStatusRegister() {
-			byte s = (byte) (N * 128 + V * 64 + U * 32 + B * 16 + D * 8 + I * 4 + Z * 1 + C * 1);
+			byte s = (byte) (N * 128 + V * 64 + U * 32 + B * 16 + D * 8 + I * 4 + Z * 2 + C * 1);
 			return s;
 		}
 	}
@@ -138,23 +138,33 @@ public class Cpu_6502 {
 		switch (command) {
 
 		// brk
-		// I Flag
+		//
 		// push return address +2
 		// push status flag
 		//
+		// This is a software interrupt. In the status register the B- flag is always set
+		// and is never affected by the brk- instruction. To check if a soft- or hardwar interrupt
+		// took place, one has the check if the P- register on the stack.
+		// If the B- flag is set => Software intterupt. If not => hardware interrupt.
 		case 0x00:
-
-			P.I = 1;
-			s++;
-			this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // Low byte of retuirn address ??
-			s++;
-			this.ram[START_ADDRESS_OF_STACK - s] = (byte) 0xff; // High byte of return address ??
-			s++;
+		this.P.I=1; // TODO If set, emulation ends... This is not a how the 6502 works....
+			
+			// Push pc+2 high, low byte on the stack. Finaly the status register.
+			// TODO Implement hardware interupt behaviour => brk flag of the status register
+			// pushed on the stack =0!
+			this.pc=this.pc+2;
+			this.s++;
+			this.ram[START_ADDRESS_OF_STACK-s]= (byte)  this.high(this.pc);
+			this.s++;
+			this.ram[START_ADDRESS_OF_STACK-s]= (byte)  this.low(this.pc);
+			this.s++;
 			this.ram[START_ADDRESS_OF_STACK - s] = (byte) (P.getStatusRegister());
-			// this.pc++;
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
-					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk");
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
+			
+			// TODO Implement jump through 6502's IRQ/ BREAK vector....
+			
 			break;
 
 		// clc
@@ -245,7 +255,7 @@ public class Cpu_6502 {
 			this.pc++;
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
-					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha "+this.dumpStack(ram));
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " pha " + this.dumpStack(ram));
 			break;
 
 		// pla
@@ -383,6 +393,53 @@ public class Cpu_6502 {
 
 			break;
 
+		// sta
+		//
+
+		// adc
+		// Carry, overvlow, negative and zero flag
+		case 0x69:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " adc #";
+			this.pc++;
+			this.vt.getComandExecuted(com + String.format("$%02x", this.ram[pc]));
+
+			// BCD?
+			if (this.P.D == 1) {
+				// TODO Insert adc BCD- mode...
+
+			} else {
+				// Non BCD
+				// Add with carry
+				// TODO Debug Overflow flag.....
+
+				this.a = this.a + this.ram[pc] + this.P.C;
+
+				if (this.a == 0) {
+					this.P.Z = 1;
+					this.P.N = 0;
+				} else
+					this.P.Z = 0;
+
+				if (this.a > 255) {
+					this.a = 0;
+					this.P.C = 1;
+					this.P.Z = 1;
+					this.P.N = 0;
+
+				}
+				// a< -128 or a> 127
+				if (this.a > 127 && this.a <= 255)
+					this.P.V = 0;
+				else
+					this.P.V = 1;
+
+			}
+
+			pc++;
+
+			break;
+
 		// bne
 		// Branch on result not zero.
 		// No flags...
@@ -499,7 +556,7 @@ public class Cpu_6502 {
 	 * @return Low byte part of integer passed
 	 */
 	private int low(int integer) {
-		return integer - this.high(integer)*256;
+		return integer - this.high(integer) * 256;
 	}
 
 	/**

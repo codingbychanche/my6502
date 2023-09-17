@@ -35,15 +35,15 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
-				ram[0x0600] = (byte) 0x20;
-				ram[0x0601] = (byte) 0x06;
-				ram[0x0602] = (byte) 0x06;
-				ram[0x0603] = (byte) 0xa9;
-				ram[0x0604] = (byte) 0;
-				ram[0x0605]=(byte) 0;
-				ram[0x0606]=(byte) 0xa9;
-				ram[0x0607]=(byte) 0xff;
-				ram [0x0608]=(byte) 0x60;
+				ram[0x0600] = (byte) 0x18;
+				ram[0x0601] = (byte) 0xa9;
+				ram[0x0602] = (byte) 250;
+				ram[0x0603] = (byte) 0x69;
+				ram[0x0604] = (byte) 0x01;
+				ram[0x0605]=(byte) 0xd0;
+				ram[0x0606]=(byte) 0xfc;
+				ram[0x0607]=(byte) 0x00;
+				ram [0x0608]=(byte) 0x00;
 							
 				cpu.execute(ram, 0x600,clockSpeed);
 
