@@ -3,7 +3,7 @@ package cpu;
 /**
  * Model for a virtual machine.
  * 
- * Executes code via an attched cpu.
+ * Executes code via an attached cpu.
  * 
  * @author Berthold
  *
@@ -13,6 +13,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	private byte[] ram;
 	private Cpu_6502 cpu;
 	private long clockSpeed;
+	
+	public static int IRQ_VECTOR=0xfffe;
 
 	/**
 	 * Creates a new virtual machine.
@@ -23,6 +25,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public VirtualMachine(int ramSize) {
 		cpu = new Cpu_6502(this);
 		ram = new byte[ramSize];
+		
+		initRam();
 	}
 
 	/**
@@ -52,6 +56,16 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		});
 		t.start();
 
+	}
+	
+	/**
+	 * Inits the ram of our virtual machine
+	 * 
+	 */
+	private void initRam() {
+		
+		this.ram[IRQ_VECTOR]=6;
+		this.ram[IRQ_VECTOR+1]=0;
 	}
 
 	/**

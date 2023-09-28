@@ -37,7 +37,7 @@ public class Cpu_6502 {
 	int s = -1; // Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
 
 	// TODO: This is a workaround until hardware/ software interrupts are
-	// implemented and working correctly. This is ste to true, when a brk-instruction
+	// implemented and working correctly. This is set to true, when a brk-instruction
 	// is executed...
 	boolean endEmulation=true;
 	
@@ -60,7 +60,8 @@ public class Cpu_6502 {
 		 * @return A string containing a human readable form of the register contents.
 		 */
 		public String printStatus() {
-			return (String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U
+			return (String.format("PC=$%04x",pc)+
+					String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U
 					+ " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a + " X=" + x + " Y=" + y
 					+ String.format(" // Status=$%02x", getStatusRegister()));
 		}
@@ -170,7 +171,9 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
 			
 			// TODO Implement jump through 6502's IRQ/ BREAK vector....
+			this.pc=this.ram[vt.IRQ_VECTOR]*256+this.ram[vt.IRQ_VECTOR+1];
 			
+		
 			break;
 
 		// clc
@@ -616,7 +619,7 @@ public class Cpu_6502 {
 		StringBuilder stackTrace = new StringBuilder();
 		stackTrace.append("Stack | ");
 		for (int i = START_ADDRESS_OF_STACK; i >= (START_ADDRESS_OF_STACK - s); i--)
-			stackTrace.append(unsignedByte(ram[i]) + "  @" + String.format("%03x", i) + " | ");
+			stackTrace.append(String.format ("$%02x",unsignedByte(ram[i])) + "  @" + String.format("$%03x", i) + " | ");
 		stackTrace.append("<< Top of Stack");
 		return stackTrace.toString();
 	}
