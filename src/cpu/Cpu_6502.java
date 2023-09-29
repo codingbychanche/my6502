@@ -20,6 +20,11 @@ public class Cpu_6502 {
 	private byte[] ram;
 
 	//
+	//
+	//
+	public static int IRQ_VECTOR = 0xfffe;
+
+	//
 	// Virtual machine this processor is connected to..
 	//
 	VirtualMachine vt;
@@ -37,10 +42,11 @@ public class Cpu_6502 {
 	int s = -1; // Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
 
 	// TODO: This is a workaround until hardware/ software interrupts are
-	// implemented and working correctly. This is set to true, when a brk-instruction
+	// implemented and working correctly. This is set to true, when a
+	// brk-instruction
 	// is executed...
-	boolean endEmulation=true;
-	
+	boolean endEmulation = true;
+
 	//
 	// The 6502 status register
 	//
@@ -60,10 +66,9 @@ public class Cpu_6502 {
 		 * @return A string containing a human readable form of the register contents.
 		 */
 		public String printStatus() {
-			return (String.format("PC=$%04x",pc)+
-					String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s) + "// N=" + N + " V=" + V + " -=" + U
-					+ " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C + " // A=" + a + " X=" + x + " Y=" + y
-					+ String.format(" // Status=$%02x", getStatusRegister()));
+			return (String.format("PC=$%04x", pc) + String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s)
+					+ "// N=" + N + " V=" + V + " -=" + U + " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C
+					+ " // A=" + a + " X=" + x + " Y=" + y + String.format(" // Status=$%02x", getStatusRegister()));
 		}
 
 		/**
@@ -148,32 +153,32 @@ public class Cpu_6502 {
 		// push return address +2
 		// push status flag
 		//
-		// This is a software interrupt. In the status register the B- flag is always set
-		// and is never affected by the brk- instruction. To check if a soft- or hardwar interrupt
+		// This is a software interrupt. In the status register the B- flag is always
+		// set
+		// and is never affected by the brk- instruction. To check if a soft- or hardwar
+		// interrupt
 		// took place, one has the check if the P- register on the stack.
 		// If the B- flag is set => Software intterupt. If not => hardware interrupt.
 		case 0x00:
-		//this.P.I=1; // TODO If set, emulation ends... This is not a how the 6502 works....
-		this.endEmulation=false;
-			
+			this.endEmulation = false;
+
 			// Push pc+2 high, low byte on the stack. Finaly the status register.
 			// TODO Implement hardware interupt behaviour => brk flag of the status register
 			// pushed on the stack =0!
-			this.pc=this.pc+2;
+			this.pc = this.pc + 2;
 			this.s++;
-			this.ram[START_ADDRESS_OF_STACK-s]= (byte)  this.high(this.pc);
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.high(this.pc);
 			this.s++;
-			this.ram[START_ADDRESS_OF_STACK-s]= (byte)  this.low(this.pc);
+			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.low(this.pc);
 			this.s++;
 			this.ram[START_ADDRESS_OF_STACK - s] = (byte) (P.getStatusRegister());
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
-			
+
 			// TODO Implement jump through 6502's IRQ/ BREAK vector....
-			this.pc=this.ram[vt.IRQ_VECTOR]*256+this.ram[vt.IRQ_VECTOR+1];
-			
-		
+			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
+
 			break;
 
 		// clc
@@ -181,10 +186,12 @@ public class Cpu_6502 {
 		case 0x18:
 
 			P.C = 0;
-			this.pc++;
+		
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " clc");
+		
+			this.pc++;
 			break;
 
 		// sec
@@ -379,7 +386,7 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey");
 			break;
 
-		// lda #b
+		// lda #b Immediate
 		// Z,N Flags
 		case 169:
 
@@ -402,8 +409,21 @@ public class Cpu_6502 {
 
 			break;
 
-		// sta
+		// sta xxxx Absolute
 		//
+		case 0x8d:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " sta ";
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+			this.ram[address] = (byte) this.a;
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+			this.pc++;
+			break;
 
 		// adc
 		// Carry, overvlow, negative and zero flag
@@ -439,10 +459,10 @@ public class Cpu_6502 {
 				}
 				// TODO Check behaviour of overflow flag
 				// a< -128 or a> 127
-				//if (this.a > 127 && this.a <= 255)
-					//this.P.V = 0;
-				//	else
-				//this.P.V = 1;
+				// if (this.a > 127 && this.a <= 255)
+				// this.P.V = 0;
+				// else
+				// this.P.V = 1;
 
 			}
 
@@ -619,7 +639,7 @@ public class Cpu_6502 {
 		StringBuilder stackTrace = new StringBuilder();
 		stackTrace.append("Stack | ");
 		for (int i = START_ADDRESS_OF_STACK; i >= (START_ADDRESS_OF_STACK - s); i--)
-			stackTrace.append(String.format ("$%02x",unsignedByte(ram[i])) + "  @" + String.format("$%03x", i) + " | ");
+			stackTrace.append(String.format("$%02x", unsignedByte(ram[i])) + "  @" + String.format("$%03x", i) + " | ");
 		stackTrace.append("<< Top of Stack");
 		return stackTrace.toString();
 	}
