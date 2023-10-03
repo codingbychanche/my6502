@@ -37,24 +37,50 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
-				ram[0x0600] = (byte) 0x18;
-				ram[0x0601] = (byte) 0xa9;
-				ram[0x0602] = (byte) 250;
-				ram[0x0603] = (byte) 0x69;
-				ram[0x0604] = (byte) 0x01;
-				ram[0x0605] = (byte) 0xd0;
-				ram[0x0606] = (byte) 0xfc;
-
-				ram[0x0607] = (byte) 0xa9;
-				ram[0x0608] = (byte) 0x88;
-				ram[0x0609] = (byte) 0x8d;
-				ram[0x060a] = (byte) 0x00;
-				ram[0x060b] = (byte) 0x03;
-
+				ram[1536] = (byte) 0xa2;
+				ram[1537] = (byte) 0x03;
+				ram[1538] = (byte) 0xa9;
+				ram[1539] = (byte) 0xfe;
+				ram[1540] = (byte) 0x8d;
+				ram[1541] = (byte) 0xa4;
+				ram[1542] = (byte) 0x06;
+				ram[1543] = (byte) 0x8d;
+				
+				ram[1544] = (byte) 0xa5;
+				ram[1545] = (byte) 0x06;
+				ram[1546] = (byte) 0x18;
+				ram[1547] = (byte) 0xad;
+				ram[1548] = (byte) 0xa4;
+				ram[1549] = (byte) 0x06;
+				ram[1550] = (byte) 0x69;
+				ram[1551] = (byte) 0x01;
+				
+				ram[1552] = (byte) 0x8d;
+				ram[1553] = (byte) 0xa4;
+				ram[1554] = (byte) 0x06;
+				ram[1555] = (byte) 0xad;
+				ram[1556] = (byte) 0xa5;
+				ram[1557] = (byte) 0x06;
+				ram[1558] = (byte) 0x69;
+				ram[1559] = (byte) 0x00;
+				
+				ram[1560] = (byte) 0x8d;
+				ram[1561] = (byte) 0xa5;
+				ram[1562] = (byte) 0x06;
+				ram[1563] = (byte) 0xca;
+				ram[1564] = (byte) 0xd0;
+				ram[1565] = (byte) 0xec;
+				ram[1566] = (byte) 0xae;
+				ram[1567] = (byte) 0xa4;
+				ram[1568] = (byte) 0x06;		
+				ram[1569] = (byte) 0xac;
+				ram[1570]=(byte) 0xa5;
+				ram[1571]=(byte)0x06;
+				
 				cpu.execute(ram, 0x600, clockSpeed);
 
-				System.out.println(dumpRam(760, 800));
-				System.out.println(dumpRam(1536, 1550));
+				System.out.println(dumpRam(1700, 1710));
+				System.out.println(dumpRam(1536, 1565));
 			}
 
 		});
