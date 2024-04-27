@@ -7,7 +7,7 @@ public interface VirtualMachineReceiver {
 	public void getComandExecuted(String s);
 	
 	/**
-	 * If a jmp. instruction wasexecuted, this method receives
+	 * If a jmp. instruction was executed, this method receives
 	 * the target address.
 	 * 
 	 * @param a Target address of the jump instruction.

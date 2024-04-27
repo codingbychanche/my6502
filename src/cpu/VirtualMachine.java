@@ -3,7 +3,7 @@ package cpu;
 /**
  * Model for a virtual machine.
  * 
- * Executes code via an attached cpu.
+ * Executes code via an attached cpu. 
  * 
  * @author Berthold
  *
@@ -37,7 +37,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
-				/*
+				
 				ram[1536] = (byte) 0xa2;
 				ram[1537] = (byte) 0x03;
 				ram[1538] = (byte) 0xa9;
@@ -77,8 +77,9 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				ram[1569] = (byte) 0xac;
 				ram[1570]=(byte) 0xa5;
 				ram[1571]=(byte)0x06;
-				*/
+				ram[1572]=(byte)0x00;
 				
+				/*
 				ram[1536] = (byte) 0xa9;
 				ram[1537] = (byte) 0x14;
 				ram[1538] = (byte) 0x8d;
@@ -90,6 +91,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				ram[1544] = (byte) 0xa9;		
 				ram[1545] = (byte) 0x01;
 				ram [1546]=(byte) 0;
+				 */
 				cpu.execute(ram, 0x600, clockSpeed);
 
 				System.out.println(dumpRam(1700, 1710));
@@ -107,8 +109,15 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 */
 	private void initRam() {
 
+		// This set's addresses for the varoius IRQ- Interrupts of the 6502
+		
+		// IRQ handler routine
 		this.ram[cpu.IRQ_VECTOR] = 6;
 		this.ram[cpu.IRQ_VECTOR + 1] = 0;
+		
+		// ToDo: Set further vectors.....
+		// Keyboard interruppt would be the next locical step.....
+		
 	}
 
 	/**

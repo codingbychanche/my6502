@@ -18,11 +18,32 @@ public class Cpu_6502 {
 	// RAM
 	//
 	private byte[] ram;
-
+	
 	//
+	// NMI
+	// Non maskable interrupts 
 	//
+	// ToDo: Not impelemnted yet...
 	//
-	public static int IRQ_VECTOR = 0xfffe;
+	public static int NMI_VECTOR=0xfffa;
+	
+	//
+	// Reset vector
+	//
+	public static int RESET_VECTOR=0xfffc;
+	
+	// IRQ
+	// Init Vectors for maskable interupt requests of our processor.
+	// IRQ= Maskable Interrupt requests.
+	//
+	// Maskable Interrupts can be ignored.
+	//
+	// The handler routine is called whenever an IRQ occured.
+	// When an interrupt occurs, the pc  and status register are pushed on the stack and 
+	// the program counter is read from $FFFE (PCL) and $FFFF (PCH).
+	
+	public static int IRQ_VECTOR = 0xfffe; // IRQ- handler routine. Decides what caused the irq...
+	
 
 	//
 	// Virtual machine this processor is connected to..
@@ -45,7 +66,7 @@ public class Cpu_6502 {
 	// implemented and working correctly. This is set to true, when a
 	// brk-instruction
 	// is executed...
-	boolean endEmulation = true;
+	boolean runEmulation = true;
 
 	//
 	// The 6502 status register
@@ -111,7 +132,7 @@ public class Cpu_6502 {
 		//
 		// Parse
 		//
-		while (endEmulation) {
+		while (runEmulation) {
 			int command = unsignedByte(this.ram[pc]);
 			parser(command);
 			vt.getProcessorState(this.P.printStatus());
@@ -149,22 +170,29 @@ public class Cpu_6502 {
 		switch (command) {
 
 		// brk
+		// This works according to => 
+		// Chapter 9.11: https://archive.org/details/mos_microcomputers_programming_manual/page/n163/mode/2up
 		//
 		// push return address +2
 		// push status flag
 		//
 		// This is a software interrupt. In the status register the B- flag is always
-		// set
-		// and is never affected by the brk- instruction. To check if a soft- or hardwar
-		// interrupt
-		// took place, one has the check if the P- register on the stack.
+		// set and is never affected by the brk- instruction. To check if a soft- or hardware
+		// interrupt took place, one has the check if the P- register on the stack.
 		// If the B- flag is set => Software intterupt. If not => hardware interrupt.
 		case 0x00:
-			this.endEmulation = false;
+			
+			// This will become obsolete once the proper routine for handling
+			// IRQ interrupts is implemented with the virtual machine.
+			// For the time beeing this will take care that the emulation is
+			// not caught in an infite loop once a 'brk' instruction was 
+			// executed.
+			//
+			// Observe the pc after the emulation stops, it will point to the
+			// address stored at the IRQ vector of the virtual machines ram....
+			this.runEmulation = false;
 
 			// Push pc+2 high, low byte on the stack. Finaly the status register.
-			// TODO Implement hardware interupt behaviour => brk flag of the status register
-			// pushed on the stack =0!
 			this.pc = this.pc + 2;
 			this.s++;
 			this.ram[START_ADDRESS_OF_STACK - s] = (byte) this.high(this.pc);
@@ -176,7 +204,7 @@ public class Cpu_6502 {
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
 
-			// TODO Implement jump through 6502's IRQ/ BREAK vector....
+			// FFFE pcl   FFFF pch
 			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
 
 			break;
