@@ -32,16 +32,26 @@
 	.BYTE 0,0,0,0,0,0,0,0,0,0
 	.BYTE 0,0,0,0,0,0,0,0,0,0
 	.BYTE 0,0,0,0,0
+
+	;; Start of the operating system
+	;;
+	*=$0600
+loop:	clc
+	lda #1
+	adc #10
+	sta 3000
+	brk
 	
 	;; 6502 Interrupt vector table
 	;;
 	;; Addreses are stored in a low - high byte
 	;; order
-	
-	*=$1000 
-	.WORD $aa		; nmi $fffa-b
-	.WORD $bb		; Reset vector $fffc-d
-	.WORD $CC		; IRQ vector $fffe-f
+
+	*=$fffa 
+	.WORD $a800		; nmi $fffa-b
+	.WORD $0600		; Reset vector $fffc-d
+
+	;; $fffe and $ffff (IRQ Vector seems not to be compiling..
 	
 	
 	

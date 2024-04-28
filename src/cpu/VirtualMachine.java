@@ -36,16 +36,6 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		ram = new byte[ramSize];
 
 		//
-		// Inits ram according to the target processor
-		// IRQ/ NMI Vectors.... Stack etc......
-		// 
-		// FOR THE TIME BEEING THIS IS DONE HARD- CODED
-		// IN THE FUTURE RAM IS INITIALIZED BY THE ASSOCIATED BIOS FILE
-		//
-		
-		initRam(); 
-
-		//
 		// This part reads an Atari Dos 2.x binary file into memory
 		//
 
@@ -98,6 +88,13 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				System.out.println("---------------------------------------------------------------------");
 			}
 		}
+		
+		//
+		// IRQ vector is set manually, because 'ATASM' seems not to be able
+		// to compile addresses $FFFE- $FFFF
+		//
+		this.ram[cpu.IRQ_VECTOR]=0;
+		this.ram[cpu.IRQ_VECTOR+1]=0;
 	}
 
 	/**
@@ -116,31 +113,23 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				// FOR THE TIME BEEING WE HAVE A FIXED START ADDRESS
 				// IN THE FUTURE THE CORRECT START UP SEQUENCE OF THE ASSOCIATED CPU
 				// WILL BE EMEULATED AND DONE FROM WITHIN THE ASSOCIATED BIOS FILE...
-				cpu.execute(ram, 0x600, clockSpeed);
+				cpu.execute(ram, clockSpeed);
 
-				System.out.println(dumpRam(1700, 1710));
+				System.out.println(dumpRam(3000, 3001));
 			}
 
 		});
 		t.start();
-
-	}
-
-	/**
-	 * Inits the ram of our virtual machine
-	 * 
-	 * TODO: IN THE FUTURE THIS WILL BE DONE WHITIN THE ASSOCIATED BIOS FILE
-	 */
-	private void initRam() {
-
-		// This set's addresses for the varoius IRQ- Interrupts of the 6502
-
-		// IRQ handler routine
-		this.ram[cpu.IRQ_VECTOR] = 6;
-		this.ram[cpu.IRQ_VECTOR + 1] = 0;
-
-		// ToDo: Set further vectors.....
-		// Keyboard interruppt would be the next locical step.....
+		
+		// FROM HERE IMPLEMENT THE LOOP FOR THE VIRTUAL MACHINE WHICH
+		// CONSTITUTES THE INTERFACE BETWEEN THE REAL HARDWARE AND THE
+		// VM AND TO THE ATTACHED PROCESSOR....
+		//
+		// FOR EXAMPLE: WE COULD IMPLEMENT KEYBOARD POLLING AND 
+		// WAIT FOR AN 'OF' KEY WHICH ENDED THE EMULATION OR AN 
+		// INTERRUPT NOTIFING THE PROCESSOR.....
+		
+		for (int i=0;i==0;);
 
 	}
 

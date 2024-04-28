@@ -8,6 +8,9 @@ package cpu;
  */
 public class Cpu_6502 {
 	public static final String cpuTypeLiteral="MOS 6502";
+	
+	private static final int LOW=0;
+	private static final int HIGH=1;
 
 	//
 	// 6502 address space
@@ -29,8 +32,9 @@ public class Cpu_6502 {
 	public static int NMI_VECTOR=0xfffa;
 	
 	//
-	// Reset vector
+	// Reset vector and reset line
 	//
+	public int RESET_LINE;
 	public static int RESET_VECTOR=0xfffc;
 	
 	// IRQ
@@ -113,21 +117,46 @@ public class Cpu_6502 {
 	public Cpu_6502(VirtualMachine vt) {
 		this.vt = vt;
 		this.P = new ProcessorStatus();
+		
+		
+		// Once this is set to HIGH the processor set the programm counter
+		// to the address stored at the reset vector.
+		// The virtual machine is in charge of deciding when this can be done
+		// e.g. when all hardware componets are ready...)
+		
+		this.RESET_LINE=LOW; 
 	}
 
 	/**
 	 * Executes a series of commands, stored from start address upwards in specified
 	 * ram.
 	 * 
+	 * TODO: AFTER START THE PROCESSOR IS IN AN UNDEFINED STATE. WHEN THE RESET LINE IS SET TO
+	 * HIGH STATE THE PROGRAM COUNTER IS SET TO THE ADDRESS STORED IN THE RESET VECTOR. THE
+	 * VIRTUAL MACHINE IS IN CHARGE OF THE RESET LINE AND HAS TO DECIDE WHEN CONTROL IS GIVEN
+	 * TO THE PROCESSOR AFTER RESTART OR A SESTEM RESET.
+	 * 
+	 * THE BEHAVIOUR ABOVE HAS YET TO BE IMPLEMENTED => SET/B RESET RESET LINE
+	 * 
 	 * @param ram        Asscoiated ram.
 	 * @param address    The address from where to run....
 	 * @param clockSpeed The speed which each cycle takes in [ms]
 	 * @return The resulting ram contents.
 	 */
-	public byte[] execute(byte[] ram, int address, long clockSpeed) {
+	public byte[] execute(byte[] ram, long clockSpeed) {
 
 		this.ram = ram;
-		this.pc = address;
+		
+		
+		// AS LONG AS THE RESET LINE IS NOT SET TO HIGH
+		// THE PROCESSOR IS IN AN UNDEFINED STATE. WHEN RESET LINE IS SET TO HIGH
+		// THE PROCESSOR SETS THE PC TO THE ADDRESS STORED AT THE RESET VECTOR.
+		// FOR THE TIME BEEING THE RESET LINE IS NOT CHECKED AND WE ASUME
+		// IT IS HIGH!
+		
+		int start=this.ram[this.RESET_VECTOR]+this.ram[this.RESET_VECTOR+1]*256;
+		this.pc = start;		
+		
 		this.diassembled = new StringBuilder(); // FIND ANOTHER WAY THAN USING THIS GLOBAL VAR....
 
 		//
@@ -139,7 +168,7 @@ public class Cpu_6502 {
 			vt.getProcessorState(this.P.printStatus());
 
 			//
-			// Whait to emulate the speed of the cpu...
+			// Wait to emulate the speed of the cpu...
 			//
 			// THIS HAS TO BE CHANGED.
 			// IN ORDER TO EMULATE CORRECTLY A DEDICETD METHOD WHICH INCREASES
@@ -205,6 +234,7 @@ public class Cpu_6502 {
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
 
+			// Get address from irq- vector in ram and set pc accordimngly....
 			// FFFE pcl   FFFF pch
 			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
 
@@ -799,5 +829,14 @@ public class Cpu_6502 {
 
 	public int unsignedByte(byte b) {
 		return b & 0xff;
+	}
+	
+	/**
+	 * Sets the status of the reset line
+	 * 
+	 * @param resetLineState
+	 */
+	public void setResetLine(int resetLineState) {
+		this.RESET_LINE=resetLineState;
 	}
 }
