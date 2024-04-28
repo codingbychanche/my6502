@@ -1,9 +1,15 @@
 package cpu;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
 /**
  * Model for a virtual machine.
  * 
- * Executes code via an attached cpu. 
+ * Executes code via an attached cpu.
  * 
  * @author Berthold
  *
@@ -19,12 +25,79 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 * 
 	 * @param cpu     Cpu emulator.
 	 * @param ramSize Soze of ram.
+	 * @throws IOException
+	 * @throws FileNotFoundException
 	 */
-	public VirtualMachine(int ramSize) {
+	public VirtualMachine(int ramSize, String pathOfBiosFile) throws FileNotFoundException, IOException {
+		
+		System.out.println("VM INITIALIZES.....");
+		
 		cpu = new Cpu_6502(this);
 		ram = new byte[ramSize];
 
-		initRam();
+		//
+		// Inits ram according to the target processor
+		// IRQ/ NMI Vectors.... Stack etc......
+		// 
+		// FOR THE TIME BEEING THIS IS DONE HARD- CODED
+		// IN THE FUTURE RAM IS INITIALIZED BY THE ASSOCIATED BIOS FILE
+		//
+		
+		initRam(); 
+
+		//
+		// This part reads an Atari Dos 2.x binary file into memory
+		//
+
+		File file = new File(pathOfBiosFile);
+		byte[] bytes = new byte[(int) file.length()];
+
+		
+		System.out.println("READING BIOS ROM FROM:"+pathOfBiosFile);
+		try (FileInputStream fis = new FileInputStream(file)) {
+
+			int b;
+			int junksRead = 0;
+
+			// 2 time $ff
+			b = fis.read();
+			b = fis.read();
+
+			while (b != -1) {
+
+				// Junks
+				junksRead++;
+				System.out.println("Reading junk #" + junksRead);
+
+				// Start address
+				int bl = fis.read();
+				int bh = fis.read();
+				int start = bl + 256 * bh;
+				System.out.println("Start:" + start);
+
+				// (end-start)+1 address
+				bl = fis.read();
+				bh = fis.read();
+				int end = (bl + 256 * bh) + 1;
+				int size = end - start;
+				System.out.println("Length:" + size);
+				System.out.println("Next free byte:" + end);
+
+				//
+				// Read # of bytes and write to asociated address
+				// into ram.
+				//
+				System.out.println("Reading:");
+				for (int n = 0; n <= size - 1; n++) {
+					b = fis.read();
+					System.out.print(String.format("%02x", b) + ",");
+					if (start < ram.length && start>0)
+						ram[start + n] = (byte) b;
+				}
+				System.out.println();
+				System.out.println("---------------------------------------------------------------------");
+			}
+		}
 	}
 
 	/**
@@ -33,69 +106,19 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 */
 	public void run(long clockSpeed) {
 		this.clockSpeed = clockSpeed;
+		
+		System.out.println("STARTING VM ("+cpu.cpuTypeLiteral+")");
 
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
-				
-				ram[1536] = (byte) 0xa2;
-				ram[1537] = (byte) 0x03;
-				ram[1538] = (byte) 0xa9;
-				ram[1539] = (byte) 0xfe;
-				ram[1540] = (byte) 0x8d;
-				ram[1541] = (byte) 0xa4;
-				ram[1542] = (byte) 0x06;
-				ram[1543] = (byte) 0x8d;
-				
-				ram[1544] = (byte) 0xa5;
-				ram[1545] = (byte) 0x06;
-				ram[1546] = (byte) 0x18;
-				ram[1547] = (byte) 0xad;
-				ram[1548] = (byte) 0xa4;
-				ram[1549] = (byte) 0x06;
-				ram[1550] = (byte) 0x69;
-				ram[1551] = (byte) 0x01;
-				
-				ram[1552] = (byte) 0x8d;
-				ram[1553] = (byte) 0xa4;
-				ram[1554] = (byte) 0x06;
-				ram[1555] = (byte) 0xad;
-				ram[1556] = (byte) 0xa5;
-				ram[1557] = (byte) 0x06;
-				ram[1558] = (byte) 0x69;
-				ram[1559] = (byte) 0x00;
-				
-				ram[1560] = (byte) 0x8d;
-				ram[1561] = (byte) 0xa5;
-				ram[1562] = (byte) 0x06;
-				ram[1563] = (byte) 0xca;
-				ram[1564] = (byte) 0xd0;
-				ram[1565] = (byte) 0xec;
-				ram[1566] = (byte) 0xae;
-				ram[1567] = (byte) 0xa4;
-				ram[1568] = (byte) 0x06;		
-				ram[1569] = (byte) 0xac;
-				ram[1570]=(byte) 0xa5;
-				ram[1571]=(byte)0x06;
-				ram[1572]=(byte)0x00;
-				
-				/*
-				ram[1536] = (byte) 0xa9;
-				ram[1537] = (byte) 0x14;
-				ram[1538] = (byte) 0x8d;
-				ram[1539] = (byte) 0xa4;
-				ram[1540] = (byte) 0x06;
-				ram[1541] = (byte) 0xd0;
-				ram[1542] = (byte) 0x01;
-				ram[1543] = (byte) 0x00;
-				ram[1544] = (byte) 0xa9;		
-				ram[1545] = (byte) 0x01;
-				ram [1546]=(byte) 0;
-				 */
+
+				// FOR THE TIME BEEING WE HAVE A FIXED START ADDRESS
+				// IN THE FUTURE THE CORRECT START UP SEQUENCE OF THE ASSOCIATED CPU
+				// WILL BE EMEULATED AND DONE FROM WITHIN THE ASSOCIATED BIOS FILE...
 				cpu.execute(ram, 0x600, clockSpeed);
 
 				System.out.println(dumpRam(1700, 1710));
-				System.out.println(dumpRam(1536, 1565));
 			}
 
 		});
@@ -106,18 +129,19 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	/**
 	 * Inits the ram of our virtual machine
 	 * 
+	 * TODO: IN THE FUTURE THIS WILL BE DONE WHITIN THE ASSOCIATED BIOS FILE
 	 */
 	private void initRam() {
 
 		// This set's addresses for the varoius IRQ- Interrupts of the 6502
-		
+
 		// IRQ handler routine
 		this.ram[cpu.IRQ_VECTOR] = 6;
 		this.ram[cpu.IRQ_VECTOR + 1] = 0;
-		
+
 		// ToDo: Set further vectors.....
 		// Keyboard interruppt would be the next locical step.....
-		
+
 	}
 
 	/**
@@ -130,8 +154,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	private String dumpRam(int start, int end) {
 		StringBuilder ramListing = new StringBuilder();
 
-		int address=start;
-		
+		int address = start;
+
 		while (address <= end) {
 			ramListing.append(String.format("%04x ", address));
 			for (int i = 0; i <= 7; i++) {

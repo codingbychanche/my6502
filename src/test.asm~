@@ -1,0 +1,8 @@
+	*=$0600
+	lda #10
+	clc
+	adc #1
+	sta 1700
+	adc #0
+	sta 1701
+	brk

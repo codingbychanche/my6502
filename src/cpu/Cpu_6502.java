@@ -7,6 +7,7 @@ package cpu;
  *
  */
 public class Cpu_6502 {
+	public static final String cpuTypeLiteral="MOS 6502";
 
 	//
 	// 6502 address space
