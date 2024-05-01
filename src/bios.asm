@@ -35,12 +35,30 @@
 
 	;; Start of the operating system
 	;;
-	*=$0600
-loop:	clc
-	lda #1
-	adc #10
-	sta 3000
+start:	*=$0600	
+	ldy #0
+	lda src,y
+	sta dest
+	iny
+	lda src,y
+	sta dest+1
+	iny
+	iny
+	ldy #126
+	iny
+	iny
+	iny
+	ldy #255
+	iny
 	brk
+
+	*=2000
+dest:	
+	.BYTE 0,0,0,0,0
+
+SRC:
+	.BYTE $AA,$BB,$CC,$DD,$EE,$FF
+	
 	
 	;; 6502 Interrupt vector table
 	;;
@@ -51,7 +69,6 @@ loop:	clc
 	.WORD $a800		; nmi $fffa-b
 	.WORD $0600		; Reset vector $fffc-d
 
-	;; $fffe and $ffff (IRQ Vector seems not to be compiling..
-	
+
 	
 	

@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 /**
  * Model for a virtual machine.
@@ -15,7 +16,9 @@ import java.io.IOException;
  *
  */
 public class VirtualMachine implements VirtualMachineReceiver {
-
+	
+	private static final boolean DEBUG=true;
+	
 	private byte[] ram;
 	private Cpu_6502 cpu;
 	private long clockSpeed;
@@ -29,9 +32,9 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 * @throws FileNotFoundException
 	 */
 	public VirtualMachine(int ramSize, String pathOfBiosFile) throws FileNotFoundException, IOException {
-		
+
 		System.out.println("VM INITIALIZES.....");
-		
+
 		cpu = new Cpu_6502(this);
 		ram = new byte[ramSize];
 
@@ -42,8 +45,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		File file = new File(pathOfBiosFile);
 		byte[] bytes = new byte[(int) file.length()];
 
-		
-		System.out.println("READING BIOS ROM FROM:"+pathOfBiosFile);
+		System.out.println("READING BIOS ROM FROM:" + pathOfBiosFile);
 		try (FileInputStream fis = new FileInputStream(file)) {
 
 			int b;
@@ -81,20 +83,20 @@ public class VirtualMachine implements VirtualMachineReceiver {
 				for (int n = 0; n <= size - 1; n++) {
 					b = fis.read();
 					System.out.print(String.format("%02x", b) + ",");
-					if (start < ram.length && start>0)
+					if (start < ram.length && start > 0)
 						ram[start + n] = (byte) b;
 				}
 				System.out.println();
 				System.out.println("---------------------------------------------------------------------");
 			}
 		}
-		
+
 		//
 		// IRQ vector is set manually, because 'ATASM' seems not to be able
 		// to compile addresses $FFFE- $FFFF
 		//
-		this.ram[cpu.IRQ_VECTOR]=0;
-		this.ram[cpu.IRQ_VECTOR+1]=0;
+		this.ram[cpu.IRQ_VECTOR] = 0;
+		this.ram[cpu.IRQ_VECTOR + 1] = 0;
 	}
 
 	/**
@@ -103,33 +105,30 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 */
 	public void run(long clockSpeed) {
 		this.clockSpeed = clockSpeed;
+
+		System.out.println("STARTING VM (" + cpu.cpuTypeLiteral + ")");
 		
-		System.out.println("STARTING VM ("+cpu.cpuTypeLiteral+")");
 
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
 
-				// FOR THE TIME BEEING WE HAVE A FIXED START ADDRESS
-				// IN THE FUTURE THE CORRECT START UP SEQUENCE OF THE ASSOCIATED CPU
-				// WILL BE EMEULATED AND DONE FROM WITHIN THE ASSOCIATED BIOS FILE...
 				cpu.execute(ram, clockSpeed);
 
-				System.out.println(dumpRam(3000, 3001));
+
+				System.out.println(dumpRam(2000,2020));	
 			}
 
 		});
 		t.start();
-		
+
 		// FROM HERE IMPLEMENT THE LOOP FOR THE VIRTUAL MACHINE WHICH
 		// CONSTITUTES THE INTERFACE BETWEEN THE REAL HARDWARE AND THE
 		// VM AND TO THE ATTACHED PROCESSOR....
 		//
-		// FOR EXAMPLE: WE COULD IMPLEMENT KEYBOARD POLLING AND 
-		// WAIT FOR AN 'OF' KEY WHICH ENDED THE EMULATION OR AN 
+		// FOR EXAMPLE: WE COULD IMPLEMENT KEYBOARD POLLING AND
+		// WAIT FOR AN 'OF' KEY WHICH ENDED THE EMULATION OR AN
 		// INTERRUPT NOTIFING THE PROCESSOR.....
-		
-		for (int i=0;i==0;);
 
 	}
 
@@ -169,7 +168,8 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 	@Override
 	public void getProcessorState(String s) {
-		System.out.println(s);
+		if (DEBUG)
+			System.out.println(s);
 
 	}
 
@@ -180,6 +180,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 	@Override
 	public void getComandExecuted(String s) {
+		if (DEBUG)
 		System.out.println(s);
 	}
 

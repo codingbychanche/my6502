@@ -7,10 +7,10 @@ package cpu;
  *
  */
 public class Cpu_6502 {
-	public static final String cpuTypeLiteral="MOS 6502";
-	
-	private static final int LOW=0;
-	private static final int HIGH=1;
+	public static final String cpuTypeLiteral = "MOS 6502";
+
+	private static final int LOW = 0;
+	private static final int HIGH = 1;
 
 	//
 	// 6502 address space
@@ -22,21 +22,21 @@ public class Cpu_6502 {
 	// RAM
 	//
 	private byte[] ram;
-	
+
 	//
 	// NMI
-	// Non maskable interrupts 
+	// Non maskable interrupts
 	//
 	// ToDo: Not impelemnted yet...
 	//
-	public static int NMI_VECTOR=0xfffa;
-	
+	public static int NMI_VECTOR = 0xfffa;
+
 	//
 	// Reset vector and reset line
 	//
 	public int RESET_LINE;
-	public static int RESET_VECTOR=0xfffc;
-	
+	public static int RESET_VECTOR = 0xfffc;
+
 	// IRQ
 	// Init Vectors for maskable interupt requests of our processor.
 	// IRQ= Maskable Interrupt requests.
@@ -44,11 +44,11 @@ public class Cpu_6502 {
 	// Maskable Interrupts can be ignored.
 	//
 	// The handler routine is called whenever an IRQ occured.
-	// When an interrupt occurs, the pc  and status register are pushed on the stack and 
+	// When an interrupt occurs, the pc and status register are pushed on the stack
+	// and
 	// the program counter is read from $FFFE (PCL) and $FFFF (PCH).
-	
+
 	public static int IRQ_VECTOR = 0xfffe; // IRQ- handler routine. Decides what caused the irq...
-	
 
 	//
 	// Virtual machine this processor is connected to..
@@ -94,7 +94,8 @@ public class Cpu_6502 {
 		public String printStatus() {
 			return (String.format("PC=$%04x", pc) + String.format("-------SP=$%03x", START_ADDRESS_OF_STACK - s)
 					+ "// N=" + N + " V=" + V + " -=" + U + " B=" + B + " D=" + D + " I=" + I + " Z=" + Z + " C=" + C
-					+ " // A=" + a + " X=" + x + " Y=" + y + String.format(" // Status=$%02x", getStatusRegister()));
+					+ " // A=" + a + " X=" + x + " Y=" + y + String.format(" // Status=$%02x", getStatusRegister())
+					+ " // " + "RST=" + RESET_LINE);
 		}
 
 		/**
@@ -117,24 +118,24 @@ public class Cpu_6502 {
 	public Cpu_6502(VirtualMachine vt) {
 		this.vt = vt;
 		this.P = new ProcessorStatus();
-		
-		
+
 		// Once this is set to HIGH the processor set the programm counter
 		// to the address stored at the reset vector.
 		// The virtual machine is in charge of deciding when this can be done
 		// e.g. when all hardware componets are ready...)
-		
-		this.RESET_LINE=LOW; 
+
+		this.RESET_LINE = LOW;
 	}
 
 	/**
 	 * Executes a series of commands, stored from start address upwards in specified
 	 * ram.
 	 * 
-	 * TODO: AFTER START THE PROCESSOR IS IN AN UNDEFINED STATE. WHEN THE RESET LINE IS SET TO
-	 * HIGH STATE THE PROGRAM COUNTER IS SET TO THE ADDRESS STORED IN THE RESET VECTOR. THE
-	 * VIRTUAL MACHINE IS IN CHARGE OF THE RESET LINE AND HAS TO DECIDE WHEN CONTROL IS GIVEN
-	 * TO THE PROCESSOR AFTER RESTART OR A SESTEM RESET.
+	 * TODO: AFTER START THE PROCESSOR IS IN AN UNDEFINED STATE. WHEN THE RESET LINE
+	 * IS SET TO HIGH STATE THE PROGRAM COUNTER IS SET TO THE ADDRESS STORED IN THE
+	 * RESET VECTOR. THE VIRTUAL MACHINE IS IN CHARGE OF THE RESET LINE AND HAS TO
+	 * DECIDE WHEN CONTROL IS GIVEN TO THE PROCESSOR AFTER RESTART OR A S SYSTEM
+	 * RESET.
 	 * 
 	 * THE BEHAVIOUR ABOVE HAS YET TO BE IMPLEMENTED => SET/B RESET RESET LINE
 	 * 
@@ -146,17 +147,18 @@ public class Cpu_6502 {
 	public byte[] execute(byte[] ram, long clockSpeed) {
 
 		this.ram = ram;
-		
-		
+
 		// AS LONG AS THE RESET LINE IS NOT SET TO HIGH
 		// THE PROCESSOR IS IN AN UNDEFINED STATE. WHEN RESET LINE IS SET TO HIGH
 		// THE PROCESSOR SETS THE PC TO THE ADDRESS STORED AT THE RESET VECTOR.
 		// FOR THE TIME BEEING THE RESET LINE IS NOT CHECKED AND WE ASUME
 		// IT IS HIGH!
-		
-		int start=this.ram[this.RESET_VECTOR]+this.ram[this.RESET_VECTOR+1]*256;
-		this.pc = start;		
-		
+
+		int start = this.ram[this.RESET_VECTOR] + this.ram[this.RESET_VECTOR + 1] * 256;
+		this.pc = start;
+		this.vt.getProcessorState("Got reset Vector:" + String.format("$%04x", this.RESET_VECTOR) + " PC set to:"
+				+ String.format("$%04x", start));
+
 		this.diassembled = new StringBuilder(); // FIND ANOTHER WAY THAN USING THIS GLOBAL VAR....
 
 		//
@@ -200,22 +202,24 @@ public class Cpu_6502 {
 		switch (command) {
 
 		// brk
-		// This works according to => 
-		// Chapter 9.11: https://archive.org/details/mos_microcomputers_programming_manual/page/n163/mode/2up
+		// This works according to =>
+		// Chapter 9.11:
+		// https://archive.org/details/mos_microcomputers_programming_manual/page/n163/mode/2up
 		//
 		// push return address +2
 		// push status flag
 		//
 		// This is a software interrupt. In the status register the B- flag is always
-		// set and is never affected by the brk- instruction. To check if a soft- or hardware
+		// set and is never affected by the brk- instruction. To check if a soft- or
+		// hardware
 		// interrupt took place, one has the check if the P- register on the stack.
 		// If the B- flag is set => Software intterupt. If not => hardware interrupt.
 		case 0x00:
-			
+
 			// This will become obsolete once the proper routine for handling
 			// IRQ interrupts is implemented with the virtual machine.
 			// For the time beeing this will take care that the emulation is
-			// not caught in an infite loop once a 'brk' instruction was 
+			// not caught in an infite loop once a 'brk' instruction was
 			// executed.
 			//
 			// Observe the pc after the emulation stops, it will point to the
@@ -235,7 +239,7 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " brk // " + this.dumpStack(ram));
 
 			// Get address from irq- vector in ram and set pc accordimngly....
-			// FFFE pcl   FFFF pch
+			// FFFE pcl FFFF pch
 			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
 
 			break;
@@ -389,7 +393,7 @@ public class Cpu_6502 {
 			this.pc++;
 			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high;
-			//this.ram[address] = (byte) this.a;
+			// this.ram[address] = (byte) this.a;
 			this.y = unsignedByte(this.ram[address]);
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
@@ -403,7 +407,7 @@ public class Cpu_6502 {
 				P.N = 1;
 			else
 				P.N = 0;
-			
+
 			this.pc++;
 
 			break;
@@ -442,7 +446,7 @@ public class Cpu_6502 {
 			this.pc++;
 			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high;
-			//this.ram[address] = (byte) this.a;
+			// this.ram[address] = (byte) this.a;
 			this.x = unsignedByte(this.ram[address]);
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
@@ -456,11 +460,11 @@ public class Cpu_6502 {
 				P.N = 1;
 			else
 				P.N = 0;
-			
+
 			this.pc++;
 
 			break;
-			
+
 		// dex
 		// N,Z
 		case 0xca:
@@ -483,6 +487,28 @@ public class Cpu_6502 {
 
 			break;
 
+		// inx
+		// N,Z
+		case 0xe8:
+
+			this.x++;
+			if (this.x > 255)
+				this.x = 0;
+			if (x == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+			if (this.x >= 0 && x <= 127)
+				this.P.N = 0;
+			else
+				this.P.N = 1;
+
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " inx");
+			this.pc++;
+
+			break;
+			
 		// dey
 		// N,Z
 		case 0x88:
@@ -504,6 +530,27 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey");
 			break;
 
+			// iny
+			// N,Z
+			case 0xc8:
+
+				this.y++;
+				if (this.y > 255)
+					this.y = 0;
+				if (this.y == 0)
+					this.P.Z = 1;
+				else
+					this.P.Z = 0;
+				if (this.y >= 0 && this.y <= 127)
+					this.P.N = 0;
+				else
+					this.P.N = 1;
+				this.pc++;
+
+				this.vt.getComandExecuted(String.format("$%04x", this.pc)
+						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " iny");
+				break;
+				
 		// lda #b Immediate
 		// Z,N Flags
 		case 169:
@@ -527,21 +574,81 @@ public class Cpu_6502 {
 
 			break;
 
-			// lda b Absolut
-			// Z,N Flags
-			case 0xad:
+		// lda b Absolut
+		// Z,N Flags
+		case 0xad:
 
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+			//this.ram[address] = (byte) this.a;
+			this.a = unsignedByte(this.ram[address]);
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
+
+		// lda a,x absolut x
+		// N,Z
+		case 0xbd:
+			
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+			//this.ram[address+this.x] = (byte) this.a;
+			this.a = unsignedByte(this.ram[address+this.x]);
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address)+",x");
+
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+			
+			break;
+
+			// lda a,y absolut y
+			// N,Z
+			case 0xb9:
 				
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+
 				this.pc++;
 				low = unsignedByte(this.ram[pc]);
 				this.pc++;
 				high = unsignedByte(this.ram[pc]);
 				address = low + 256 * high;
-				this.ram[address] = (byte) this.a;
-				this.a = unsignedByte(this.ram[address]);
+				//this.ram[address+this.x] = (byte) this.a;
+				this.a = unsignedByte(this.ram[address+this.y]);
 
-				this.vt.getComandExecuted(com + String.format("$%04x", address));
+				this.vt.getComandExecuted(com + String.format("$%04x", address)+",y");
 
 				if (this.a == 0)
 					P.Z = 1;
@@ -552,11 +659,12 @@ public class Cpu_6502 {
 					P.N = 1;
 				else
 					P.N = 0;
-				
-				this.pc++;
 
+				this.pc++;
+				
 				break;
 
+			
 		// sta xxxx Absolute
 		//
 		case 0x8d:
@@ -570,7 +678,9 @@ public class Cpu_6502 {
 			this.ram[address] = (byte) this.a;
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
+			
 			this.pc++;
+			
 			break;
 
 		// adc
@@ -626,18 +736,16 @@ public class Cpu_6502 {
 		case 0xd0:
 
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " bne ";
-			
+
 			// pc already points to the current instruction. Now get the argument.
 			this.pc++;
 			int b = this.ram[pc];
-		
 
 			// Currently pc points to the argument, not the instruction
 			// so we have to correct that.
 			b++;
-			
-			int target = this.pc+ b;
-			
+
+			int target = this.pc + b;
 
 			// What ever the result of the previous instruction was, if it was zero
 			// we do not branch!
@@ -830,13 +938,13 @@ public class Cpu_6502 {
 	public int unsignedByte(byte b) {
 		return b & 0xff;
 	}
-	
+
 	/**
 	 * Sets the status of the reset line
 	 * 
 	 * @param resetLineState
 	 */
 	public void setResetLine(int resetLineState) {
-		this.RESET_LINE=resetLineState;
+		this.RESET_LINE = resetLineState;
 	}
 }

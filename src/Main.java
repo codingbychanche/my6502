@@ -8,12 +8,13 @@ public class Main {
 
 	public static void main(String[] args) throws FileNotFoundException, IOException {
 
+		final int RAM_SIZE=65536;
 		
 		if (args.length > 0) {
 			String biosPath=args[0];	
 			
 			// init VM
-			VirtualMachine vt = new VirtualMachine(65536, biosPath);
+			VirtualMachine vt = new VirtualMachine(RAM_SIZE, biosPath);
 			// Start thread. Tell it, how much millisec pause between each instruction
 			// executed.
 			vt.run(250);
