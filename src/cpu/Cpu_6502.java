@@ -770,9 +770,9 @@ public class Cpu_6502 {
 		case 0x20:
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " jsr ";
 			this.pc++;
-			high = unsignedByte(this.ram[pc]);
-			this.pc++;
 			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high; // Address of subroutine
 
 			// Push return address on the stack, which is the current address
@@ -785,6 +785,7 @@ public class Cpu_6502 {
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address) + " // " + this.dumpStack(ram));
 
+			vt.jmpAddressTrap(address);
 			this.pc = address; // jump to subroutine
 
 			break;
@@ -803,11 +804,12 @@ public class Cpu_6502 {
 			s--;
 
 			address = low + 256 * high;
-
+			
 			address++;
 			this.pc = address; // Return
 
 			vt.getComandExecuted(com + " // " + this.dumpStack(ram));
+
 			break;
 
 		// jmp xxxx
@@ -815,9 +817,9 @@ public class Cpu_6502 {
 		case 0x4c:
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " jmp ";
 			this.pc++;
-			high = unsignedByte(this.ram[pc]);
-			this.pc++;
 			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high;
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
 

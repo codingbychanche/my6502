@@ -16,12 +16,16 @@ import java.util.Scanner;
  *
  */
 public class VirtualMachine implements VirtualMachineReceiver {
-	
-	private static final boolean DEBUG=true;
-	
+
+	private static final boolean DEBUG = false;
+
 	private byte[] ram;
 	private Cpu_6502 cpu;
 	private long clockSpeed;
+
+	// Some OS- Routines to be emulated
+	//
+	private static final int PRINT = 4000; // Text to console.....
 
 	/**
 	 * Creates a new virtual machine.
@@ -107,7 +111,6 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		this.clockSpeed = clockSpeed;
 
 		System.out.println("STARTING VM (" + cpu.cpuTypeLiteral + ")");
-		
 
 		Thread t = new Thread(new Runnable() {
 
@@ -115,8 +118,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 				cpu.execute(ram, clockSpeed);
 
-
-				System.out.println(dumpRam(2000,2020));	
+				System.out.println(dumpRam(2000, 2020));
 			}
 
 		});
@@ -170,34 +172,46 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public void getProcessorState(String s) {
 		if (DEBUG)
 			System.out.println(s);
-
 	}
 
 	/**
 	 * Receives the opcode and the human readable instruction of the last
 	 * instruction executed.
 	 */
-
 	@Override
 	public void getComandExecuted(String s) {
 		if (DEBUG)
-		System.out.println(s);
+			System.out.println(s);
 	}
 
+	/**
+	 * JMP + JSR are trapped here
+	 * 
+	 * Contains a collection of emulated hardware 
+	 * components og the emnulated machine.
+	 * 
+	 */
 	@Override
 	public void jmpAddressTrap(int a) {
 		System.out.println("====>>> jmp trapped =>" + a);
 
-	}
+		switch (a) {
 
-	/**
-	 * This method checks wether an address passed belongs an emulated subroutne or
-	 * not. If a matching address could be found the subroutine is executed...
-	 * 
-	 * 
-	 * @param address
-	 */
-	private void virtualMachineEmulatedOSRoutines(int address) {
+		// Writes a string stored in ram to the console
+		// x=low
+		// y=high
+		// jsr PRINT
+		case PRINT:
+			int low = this.cpu.getX();
+			int high = this.cpu.getY();
+			int address = low + 256 * high;
 
+			int i = 0;
+			char c;
+			while ((c = (char) this.ram[address + i++]) != 0xff9b) 
+				System.out.print(c);
+			System.out.println();
+			break;
+		}
 	}
 }
