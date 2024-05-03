@@ -4,8 +4,8 @@
 
 
 	;; System equates	
-	EQU textout=4000 	; OS routine emulating text output
-	
+	textout=4000 	; OS routine emulating text output
+	input=8000		; OS routine reading user input from console
 	
 	;; Stack
 	*=$0100
@@ -43,13 +43,29 @@
 start:	*=$0600
 
 	;; Demo of an os routine
-	;; 	
+	;;
+	
 	ldx #<text
 	ldy #>text
 	jsr print
+
+	buffer= 9000
+loop:	
+	ldx #<buffer
+	ldy #>buffer
+	jsr input
+	lda buffer
+	cmp #'q'
+	bne  goon
 	brk
+goon:	
+	jsr print
+	jmp loop
+out:	
+	brk
+	
 text:
-	.BYTE "HALLO DU"
+	.BYTE "6502 Emulator, 05/2024 BF"
 	.BYTE $9b
 
 	;; Some demo os routines
@@ -58,6 +74,13 @@ text:
 print:	
 	lda #255 		; Not much to do here. Just for debbuging 
 	rts			; purposes. Output is done by VM
+	
+	;; Reads a string from console
+	;;	
+	*=input
+input:
+	lda #255
+	rts
 	
 	;; 6502 Interrupt vector table
 	;;

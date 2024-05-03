@@ -23,9 +23,14 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	private Cpu_6502 cpu;
 	private long clockSpeed;
 
+	//
+	//
+	private static final int CRLF = 0xff9b;
+
 	// Some OS- Routines to be emulated
 	//
 	private static final int PRINT = 4000; // Text to console.....
+	private static final int INPUT = 8000; // Text from console
 
 	/**
 	 * Creates a new virtual machine.
@@ -187,13 +192,18 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	/**
 	 * JMP + JSR are trapped here
 	 * 
-	 * Contains a collection of emulated hardware 
-	 * components og the emnulated machine.
+	 * Contains a collection of emulated hardware components og the emnulated
+	 * machine.
 	 * 
 	 */
 	@Override
 	public void jmpAddressTrap(int a) {
-		System.out.println("====>>> jmp trapped =>" + a);
+		int low, high, address;
+		int i;
+		char c;
+		
+		if (DEBUG)
+			System.out.println("====>>> jmp trapped =>" + a);
 
 		switch (a) {
 
@@ -202,15 +212,35 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		// y=high
 		// jsr PRINT
 		case PRINT:
-			int low = this.cpu.getX();
-			int high = this.cpu.getY();
-			int address = low + 256 * high;
+			low = this.cpu.getX();
+			high = this.cpu.getY();
+			address = low + 256 * high;
 
-			int i = 0;
-			char c;
-			while ((c = (char) this.ram[address + i++]) != 0xff9b) 
+			i = 0;
+
+			while ((c = (char) this.ram[address + i++]) != CRLF)
 				System.out.print(c);
 			System.out.println();
+			break;
+
+		// Waits for user input and stores the
+		// received string in ram
+		// x=low
+		// y=high
+		// jsr input
+		case INPUT:
+
+			low = this.cpu.getX();
+			high = this.cpu.getY();
+			address = low + 256 * high;
+
+			Scanner s = new Scanner(System.in);
+			String input = s.nextLine();
+
+			for (i = 0; i <= input.length() - 1; i++)
+				this.ram[address + i] = (byte) input.charAt(i);
+			this.ram[address + i] = (byte) CRLF;
+
 			break;
 		}
 	}

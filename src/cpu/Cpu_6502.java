@@ -508,7 +508,7 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
-			
+
 		// dey
 		// N,Z
 		case 0x88:
@@ -530,27 +530,27 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dey");
 			break;
 
-			// iny
-			// N,Z
-			case 0xc8:
+		// iny
+		// N,Z
+		case 0xc8:
 
-				this.y++;
-				if (this.y > 255)
-					this.y = 0;
-				if (this.y == 0)
-					this.P.Z = 1;
-				else
-					this.P.Z = 0;
-				if (this.y >= 0 && this.y <= 127)
-					this.P.N = 0;
-				else
-					this.P.N = 1;
-				this.pc++;
+			this.y++;
+			if (this.y > 255)
+				this.y = 0;
+			if (this.y == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+			if (this.y >= 0 && this.y <= 127)
+				this.P.N = 0;
+			else
+				this.P.N = 1;
+			this.pc++;
 
-				this.vt.getComandExecuted(String.format("$%04x", this.pc)
-						+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " iny");
-				break;
-				
+			this.vt.getComandExecuted(String.format("$%04x", this.pc)
+					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " iny");
+			break;
+
 		// lda #b Immediate
 		// Z,N Flags
 		case 169:
@@ -585,7 +585,7 @@ public class Cpu_6502 {
 			this.pc++;
 			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high;
-			//this.ram[address] = (byte) this.a;
+			// this.ram[address] = (byte) this.a;
 			this.a = unsignedByte(this.ram[address]);
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
@@ -607,7 +607,7 @@ public class Cpu_6502 {
 		// lda a,x absolut x
 		// N,Z
 		case 0xbd:
-			
+
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
 
 			this.pc++;
@@ -615,10 +615,10 @@ public class Cpu_6502 {
 			this.pc++;
 			high = unsignedByte(this.ram[pc]);
 			address = low + 256 * high;
-			//this.ram[address+this.x] = (byte) this.a;
-			this.a = unsignedByte(this.ram[address+this.x]);
+			// this.ram[address+this.x] = (byte) this.a;
+			this.a = unsignedByte(this.ram[address + this.x]);
 
-			this.vt.getComandExecuted(com + String.format("$%04x", address)+",x");
+			this.vt.getComandExecuted(com + String.format("$%04x", address) + ",x");
 
 			if (this.a == 0)
 				P.Z = 1;
@@ -631,40 +631,39 @@ public class Cpu_6502 {
 				P.N = 0;
 
 			this.pc++;
-			
+
 			break;
 
-			// lda a,y absolut y
-			// N,Z
-			case 0xb9:
-				
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+		// lda a,y absolut y
+		// N,Z
+		case 0xb9:
 
-				this.pc++;
-				low = unsignedByte(this.ram[pc]);
-				this.pc++;
-				high = unsignedByte(this.ram[pc]);
-				address = low + 256 * high;
-				//this.ram[address+this.x] = (byte) this.a;
-				this.a = unsignedByte(this.ram[address+this.y]);
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
 
-				this.vt.getComandExecuted(com + String.format("$%04x", address)+",y");
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+			// this.ram[address+this.x] = (byte) this.a;
+			this.a = unsignedByte(this.ram[address + this.y]);
 
-				if (this.a == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			this.vt.getComandExecuted(com + String.format("$%04x", address) + ",y");
 
-				if (this.a > 127)
-					P.N = 1;
-				else
-					P.N = 0;
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
 
-				this.pc++;
-				
-				break;
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
 
-			
+			this.pc++;
+
+			break;
+
 		// sta xxxx Absolute
 		//
 		case 0x8d:
@@ -678,9 +677,44 @@ public class Cpu_6502 {
 			this.ram[address] = (byte) this.a;
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
-			
+
 			this.pc++;
-			
+
+			break;
+
+		// cmp #b
+		// c,z,n
+
+		case 0xc9:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cmp #";
+			this.pc++;
+			int c = unsignedByte(this.ram[pc]);
+
+			this.vt.getComandExecuted(com + String.format("$%02x", c));
+
+			int diff = a - c;
+
+			if (diff == 0) {
+				this.P.C = 1;
+				this.P.Z = 1;
+				this.P.N = 0;
+			}
+
+			if (diff > 0) {
+				this.P.C = 1;
+				this.P.Z = 0;
+				this.P.N = 0;
+			}
+
+			if (diff < 0) {
+				this.P.C = 0;
+				this.P.Z = 0;
+				this.P.N = 1;
+			}
+
+			this.pc++;
+
 			break;
 
 		// adc
@@ -804,7 +838,7 @@ public class Cpu_6502 {
 			s--;
 
 			address = low + 256 * high;
-			
+
 			address++;
 			this.pc = address; // Return
 
