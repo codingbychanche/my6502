@@ -53,7 +53,11 @@ start:	*=$0600
 	;; Get text from console
 	;; 
 	buffer= 9000 		; User Input is stored here.
-loop:	
+loop:
+	ldx #<prompt
+	ldy #>prompt
+	jsr print
+	
 	ldx #<buffer
 	ldy #>buffer
 	jsr input
@@ -79,14 +83,14 @@ out:
 	;; Textbuffer
 	;; 
 	CRLF= $9B
+	LF= $9C
 text:
 	.BYTE "6502 Emulator, 05/2024 BF"
 	.BYTE CRLF
 
 prompt:	
 	.BYTE ">"
-	.BYTE CRLF
-
+	.BYTE LF
 wrgcom:
 	.BYTE "Not a valid command...."
 	.BYTE CRLF

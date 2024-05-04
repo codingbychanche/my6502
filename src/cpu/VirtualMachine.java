@@ -26,6 +26,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	//
 	//
 	private static final int CRLF = 0xff9b;
+	private static final int CR = 0xff9c;
 
 	// Some OS- Routines to be emulated
 	//
@@ -201,7 +202,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		int low, high, address;
 		int i;
 		char c;
-		
+
 		if (DEBUG)
 			System.out.println("====>>> jmp trapped =>" + a);
 
@@ -218,9 +219,12 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 			i = 0;
 
-			while ((c = (char) this.ram[address + i++]) != CRLF)
+			while ((c = (char) this.ram[address + i++]) != CRLF && c != CR)
 				System.out.print(c);
-			System.out.println();
+
+			if (c == CRLF)
+				System.out.println();
+
 			break;
 
 		// Waits for user input and stores the
