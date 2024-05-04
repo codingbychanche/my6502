@@ -17,7 +17,7 @@ public class Main {
 			VirtualMachine vt = new VirtualMachine(RAM_SIZE, biosPath);
 			// Start thread. Tell it, how much millisec pause between each instruction
 			// executed.
-			vt.run(250);
+			vt.run(0);
 
 		} else
 			System.out.println("No Bios file.....Abording.");

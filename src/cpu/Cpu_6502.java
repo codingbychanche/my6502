@@ -198,6 +198,8 @@ public class Cpu_6502 {
 
 		String com;
 		int address, low, high;
+		int c,diff;
+		int b,target;
 
 		switch (command) {
 
@@ -684,16 +686,15 @@ public class Cpu_6502 {
 
 		// cmp #b
 		// c,z,n
-
 		case 0xc9:
 
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cmp #";
 			this.pc++;
-			int c = unsignedByte(this.ram[pc]);
+			c = unsignedByte(this.ram[pc]);
 
 			this.vt.getComandExecuted(com + String.format("$%02x", c));
 
-			int diff = a - c;
+			diff = a - c;
 
 			if (diff == 0) {
 				this.P.C = 1;
@@ -716,7 +717,73 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+			
+			// cpx #b
+			// c,z,n
+			case 0xe0:
 
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cpx #";
+				this.pc++;
+				c = unsignedByte(this.ram[pc]);
+
+				this.vt.getComandExecuted(com + String.format("$%02x", c));
+
+				diff = this.x - c;
+
+				if (diff == 0) {
+					this.P.C = 1;
+					this.P.Z = 1;
+					this.P.N = 0;
+				}
+
+				if (diff > 0) {
+					this.P.C = 1;
+					this.P.Z = 0;
+					this.P.N = 0;
+				}
+
+				if (diff < 0) {
+					this.P.C = 0;
+					this.P.Z = 0;
+					this.P.N = 1;
+				}
+
+				this.pc++;
+
+				break;
+				// cpy #b
+				// c,z,n
+				case 0xc0:
+
+					com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cmp #";
+					this.pc++;
+					c = unsignedByte(this.ram[pc]);
+
+					this.vt.getComandExecuted(com + String.format("$%02x", c));
+
+					diff = this.y - c;
+
+					if (diff == 0) {
+						this.P.C = 1;
+						this.P.Z = 1;
+						this.P.N = 0;
+					}
+
+					if (diff > 0) {
+						this.P.C = 1;
+						this.P.Z = 0;
+						this.P.N = 0;
+					}
+
+					if (diff < 0) {
+						this.P.C = 0;
+						this.P.Z = 0;
+						this.P.N = 1;
+					}
+
+					this.pc++;
+
+					break;
 		// adc
 		// Carry, overvlow, negative and zero flag
 		case 0x69:
@@ -773,13 +840,13 @@ public class Cpu_6502 {
 
 			// pc already points to the current instruction. Now get the argument.
 			this.pc++;
-			int b = this.ram[pc];
+			b = this.ram[pc];
 
 			// Currently pc points to the argument, not the instruction
 			// so we have to correct that.
 			b++;
 
-			int target = this.pc + b;
+			target = this.pc + b;
 
 			// What ever the result of the previous instruction was, if it was zero
 			// we do not branch!
@@ -798,7 +865,45 @@ public class Cpu_6502 {
 			this.vt.getComandExecuted(com + String.format("$%04x", target));
 
 			break;
+			
+			// beq
+			// Branch on equal.
+			// No flags...
+			//
+			case 0xf0:
 
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " beq ";
+
+				// pc already points to the current instruction. Now get the argument.
+				this.pc++;
+				b = this.ram[pc];
+
+				// Currently pc points to the argument, not the instruction
+				// so we have to correct that.
+				b++;
+
+				target = this.pc + b;
+
+				// Branch if the zero flag is set to 1 (cmp => z=1 if equal...)
+				// we do not branch!
+				if (this.P.Z == 1) {
+
+					// The target address of the branch is now calculated by subtracting/ adding
+					// b from the address of the instruction.
+					this.pc = target;
+
+				}
+				// No branch!
+				else
+					// Next instruction.
+					this.pc++;
+
+				this.vt.getComandExecuted(com + String.format("$%04x", target));
+
+				break;
+			
+			
+			
 		// jsr xxxx
 		// Program counter, stack pointer
 		case 0x20:
