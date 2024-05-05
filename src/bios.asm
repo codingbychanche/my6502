@@ -10,47 +10,20 @@
 	
 	;; Stack
 	*=$0100
-	.BYTE $aa,$bb,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
 
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0
-
+	;; --------------------------------------------------------------------------
 	;; Start of the operating system
 	;;
 start:	*=$0600
 
-	;; Send text to copnsole
+	;; Say hello. Print Start message
 	;;
 	
 	ldx #<text
 	ldy #>text
 	jsr print
 
-	;; Get text from console
+	;; Get command from console
 	;; 
 	buffer= 9000 		; User Input is stored here.
 loop:
@@ -61,24 +34,62 @@ loop:
 	ldx #<buffer
 	ldy #>buffer
 	jsr input
-	cpx #1	
-	beq evaluate
+	
+evaluate:
+	cpx #1			; We have 1 char commands....
+	bne error 
+	
+	lda buffer
+	cmp #'q' 		; Leave
+	beq  out
+
+	cmp #'d'		; Dump memmory contents
+	bne h
+	jsr dump
+	jmp loop
+h:	
+	cmp #'h'		; Hex converter
+	bne error		; Last command does not match => error
+	jsr tohex
+	jmp loop
+error:		
 	ldx #<wrgcom
 	ldy #>wrgcom
 	jsr print
-	jmp goon
-evaluate:
-	lda buffer
-	cmp #'q'
-	bne  goon
-	brk
 goon:	
-	jmp loop
+	jmp loop		; Main loop
 
 	;; Leave
 	;; 
 out:	
-	brk
+	brk			; Leave emu...
+	;; --------------------------------------------------------------------------
+
+	;; Dump memory contents
+	;;
+dump:
+	ldx #<dtext
+	ldy #>dtext
+	jsr print
+	rts
+	
+dtext:	
+	.BYTE "dump:"
+	.BYTE CRLF
+	
+	;; 
+	;; bin to hex converter
+	;; Converts a 8 bit integer to hex
+	;;
+	;; a  integer to convert
+tohex:
+	
+	rts
+num:
+	.BYTE 0,0
+hex:
+	.BYTE "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"
+	
 
 	;; Textbuffer
 	;; 
