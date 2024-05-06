@@ -18,7 +18,12 @@ start:	*=$0600
 
 	;; Say hello. Print Start message
 	;;
-	
+	lda #8
+	lsr
+	lsr
+	lsr
+	lsr
+	lsr
 	ldx #<text
 	ldy #>text
 	jsr print
@@ -83,13 +88,43 @@ dtext:
 	;;
 	;; a  integer to convert
 tohex:
+	lda #255		; For debbuging purposes remove when it works :-)
+	sta num			
+	lsr			; Divide num by 16 to get ones...
+	lsr
+	lsr
+	lsr
+	tax			; now get first digit
+	lda hex,x		; Ascii
+	sta num			; Save ones...
+
+	txa			; Tens= int-(num * 16) is second digit			
+	asl
+	asl
+	asl
+	asl
+	sta sav
+	clc
+	lda int
+	sbc sav
+	tax
+	lda hex,x
+	sta num+1		; Tens
+	
+	ldx #<num		; Print result...
+	ldy #>num
+	jsr print
+
 	
 	rts
+int:
+	.BYTE 0 		; Integer to convert
 num:
-	.BYTE 0,0
+	.BYTE 0,0,CRLF		; hex in ascii
 hex:
 	.BYTE "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"
-	
+sav:
+	.byte 0			; Temporary
 
 	;; Textbuffer
 	;; 

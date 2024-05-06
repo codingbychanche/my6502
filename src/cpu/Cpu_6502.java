@@ -198,8 +198,8 @@ public class Cpu_6502 {
 
 		String com;
 		int address, low, high;
-		int c,diff;
-		int b,target;
+		int c, diff;
+		int b, target;
 
 		switch (command) {
 
@@ -466,6 +466,30 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+			
+		// tax
+		// n,z
+		case 0xaa:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tax ";
+
+			this.x=this.a;
+
+			this.vt.getComandExecuted(com);
+
+			if (this.x == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.x > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
 
 		// dex
 		// N,Z
@@ -665,6 +689,8 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+			
+			
 
 		// sta xxxx Absolute
 		//
@@ -717,73 +743,73 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
-			
-			// cpx #b
-			// c,z,n
-			case 0xe0:
 
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cpx #";
-				this.pc++;
-				c = unsignedByte(this.ram[pc]);
+		// cpx #b
+		// c,z,n
+		case 0xe0:
 
-				this.vt.getComandExecuted(com + String.format("$%02x", c));
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cpx #";
+			this.pc++;
+			c = unsignedByte(this.ram[pc]);
 
-				diff = this.x - c;
+			this.vt.getComandExecuted(com + String.format("$%02x", c));
 
-				if (diff == 0) {
-					this.P.C = 1;
-					this.P.Z = 1;
-					this.P.N = 0;
-				}
+			diff = this.x - c;
 
-				if (diff > 0) {
-					this.P.C = 1;
-					this.P.Z = 0;
-					this.P.N = 0;
-				}
+			if (diff == 0) {
+				this.P.C = 1;
+				this.P.Z = 1;
+				this.P.N = 0;
+			}
 
-				if (diff < 0) {
-					this.P.C = 0;
-					this.P.Z = 0;
-					this.P.N = 1;
-				}
+			if (diff > 0) {
+				this.P.C = 1;
+				this.P.Z = 0;
+				this.P.N = 0;
+			}
 
-				this.pc++;
+			if (diff < 0) {
+				this.P.C = 0;
+				this.P.Z = 0;
+				this.P.N = 1;
+			}
 
-				break;
-				// cpy #b
-				// c,z,n
-				case 0xc0:
+			this.pc++;
 
-					com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cmp #";
-					this.pc++;
-					c = unsignedByte(this.ram[pc]);
+			break;
+		// cpy #b
+		// c,z,n
+		case 0xc0:
 
-					this.vt.getComandExecuted(com + String.format("$%02x", c));
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " cmp #";
+			this.pc++;
+			c = unsignedByte(this.ram[pc]);
 
-					diff = this.y - c;
+			this.vt.getComandExecuted(com + String.format("$%02x", c));
 
-					if (diff == 0) {
-						this.P.C = 1;
-						this.P.Z = 1;
-						this.P.N = 0;
-					}
+			diff = this.y - c;
 
-					if (diff > 0) {
-						this.P.C = 1;
-						this.P.Z = 0;
-						this.P.N = 0;
-					}
+			if (diff == 0) {
+				this.P.C = 1;
+				this.P.Z = 1;
+				this.P.N = 0;
+			}
 
-					if (diff < 0) {
-						this.P.C = 0;
-						this.P.Z = 0;
-						this.P.N = 1;
-					}
+			if (diff > 0) {
+				this.P.C = 1;
+				this.P.Z = 0;
+				this.P.N = 0;
+			}
 
-					this.pc++;
+			if (diff < 0) {
+				this.P.C = 0;
+				this.P.Z = 0;
+				this.P.N = 1;
+			}
 
-					break;
+			this.pc++;
+
+			break;
 		// adc
 		// Carry, overvlow, negative and zero flag
 		case 0x69:
@@ -865,45 +891,43 @@ public class Cpu_6502 {
 			this.vt.getComandExecuted(com + String.format("$%04x", target));
 
 			break;
-			
-			// beq
-			// Branch on equal.
-			// No flags...
-			//
-			case 0xf0:
 
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " beq ";
+		// beq
+		// Branch on equal.
+		// No flags...
+		//
+		case 0xf0:
 
-				// pc already points to the current instruction. Now get the argument.
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " beq ";
+
+			// pc already points to the current instruction. Now get the argument.
+			this.pc++;
+			b = this.ram[pc];
+
+			// Currently pc points to the argument, not the instruction
+			// so we have to correct that.
+			b++;
+
+			target = this.pc + b;
+
+			// Branch if the zero flag is set to 1 (cmp => z=1 if equal...)
+			// we do not branch!
+			if (this.P.Z == 1) {
+
+				// The target address of the branch is now calculated by subtracting/ adding
+				// b from the address of the instruction.
+				this.pc = target;
+
+			}
+			// No branch!
+			else
+				// Next instruction.
 				this.pc++;
-				b = this.ram[pc];
 
-				// Currently pc points to the argument, not the instruction
-				// so we have to correct that.
-				b++;
+			this.vt.getComandExecuted(com + String.format("$%04x", target));
 
-				target = this.pc + b;
+			break;
 
-				// Branch if the zero flag is set to 1 (cmp => z=1 if equal...)
-				// we do not branch!
-				if (this.P.Z == 1) {
-
-					// The target address of the branch is now calculated by subtracting/ adding
-					// b from the address of the instruction.
-					this.pc = target;
-
-				}
-				// No branch!
-				else
-					// Next instruction.
-					this.pc++;
-
-				this.vt.getComandExecuted(com + String.format("$%04x", target));
-
-				break;
-			
-			
-			
 		// jsr xxxx
 		// Program counter, stack pointer
 		case 0x20:
@@ -966,6 +990,34 @@ public class Cpu_6502 {
 
 			// Inform virtual machine.....
 			vt.jmpAddressTrap(address);
+
+			break;
+
+		// lsr
+		// Shifts all bits of the accu to the righ. The rightmost bit
+		// is deleted and the carry set.
+		//
+		// N,Z,C
+		case 0x4a:
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lsr ";
+
+			if ((this.a & 1)==1)	// lsb is shifted into the carry
+					this.P.C=1;
+			else
+				this.P.C=0;
+			
+			this.a = this.a >> 1;
+
+			
+			this.P.N = 0; // Result of a lsr is always positive
+			
+			if (this.a == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+
+			this.vt.getComandExecuted(com);
+			this.pc++;
 
 			break;
 		}

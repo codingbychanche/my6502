@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class VirtualMachine implements VirtualMachineReceiver {
 
-	private static final boolean DEBUG = false;
+	private static final boolean DEBUG = true;
 
 	private byte[] ram;
 	private Cpu_6502 cpu;
@@ -124,7 +124,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 				cpu.execute(ram, clockSpeed);
 
-				System.out.println(dumpRam(2000, 2020));
+				System.out.println(dumpRam(0x600, 0x680));
 			}
 
 		});
