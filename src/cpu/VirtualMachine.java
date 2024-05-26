@@ -18,7 +18,8 @@ import java.util.Scanner;
 public class VirtualMachine implements VirtualMachineReceiver {
 
 	private static final boolean DEBUG = true;
-
+	private static final String MESSAGE_ID="[VIRTUAL_MACHINE]";
+	
 	private byte[] ram;
 	private Cpu_6502 cpu;
 	private long clockSpeed;
@@ -30,8 +31,9 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 	// Some OS- Routines to be emulated
 	//
-	private static final int PRINT = 4000; // Text to console.....
-	private static final int INPUT = 8000; // Text from console
+	private static final int PRINT = 4000; 		// Text to console.....
+	private static final int INPUT = 8000; 		// Text from console
+	private static final int POINTER = 7000; 	// general purpose pointer. Low and high....
 
 	/**
 	 * Creates a new virtual machine.
@@ -43,7 +45,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 */
 	public VirtualMachine(int ramSize, String pathOfBiosFile) throws FileNotFoundException, IOException {
 
-		System.out.println("VM INITIALIZES.....");
+		System.out.println(MESSAGE_ID+"VM INITIALIZES.....");
 
 		cpu = new Cpu_6502(this);
 		ram = new byte[ramSize];
@@ -55,7 +57,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		File file = new File(pathOfBiosFile);
 		byte[] bytes = new byte[(int) file.length()];
 
-		System.out.println("READING BIOS ROM FROM:" + pathOfBiosFile);
+		System.out.println(MESSAGE_ID+"READING BIOS ROM FROM:" + pathOfBiosFile);
 		try (FileInputStream fis = new FileInputStream(file)) {
 
 			int b;
@@ -69,27 +71,27 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 				// Junks
 				junksRead++;
-				System.out.println("Reading junk #" + junksRead);
+				System.out.println(MESSAGE_ID+"Reading junk #" + junksRead);
 
 				// Start address
 				int bl = fis.read();
 				int bh = fis.read();
 				int start = bl + 256 * bh;
-				System.out.println("Start:" + start);
+				System.out.println(MESSAGE_ID+"Start:" + start);
 
 				// (end-start)+1 address
 				bl = fis.read();
 				bh = fis.read();
 				int end = (bl + 256 * bh) + 1;
 				int size = end - start;
-				System.out.println("Length:" + size);
-				System.out.println("Next free byte:" + end);
+				System.out.println(MESSAGE_ID+"Length:" + size);
+				System.out.println(MESSAGE_ID+"Next free byte:" + end);
 
 				//
 				// Read # of bytes and write to asociated address
 				// into ram.
 				//
-				System.out.println("Reading:");
+				System.out.println(MESSAGE_ID+"Reading:");
 				for (int n = 0; n <= size - 1; n++) {
 					b = fis.read();
 					System.out.print(String.format("%02x", b) + ",");
@@ -97,7 +99,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 						ram[start + n] = (byte) b;
 				}
 				System.out.println();
-				System.out.println("---------------------------------------------------------------------");
+				System.out.println(MESSAGE_ID+"---------------------------------------------------------------------");
 			}
 		}
 
@@ -116,20 +118,22 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public void run(long clockSpeed) {
 		this.clockSpeed = clockSpeed;
 
-		System.out.println("STARTING VM (" + cpu.cpuTypeLiteral + ")");
+		System.out.println(MESSAGE_ID+"STARTING VM (" + cpu.cpuTypeLiteral + ")");
 
 		Thread t = new Thread(new Runnable() {
 
 			public void run() {
 
 				cpu.execute(ram, clockSpeed);
-
-				System.out.println(dumpRam(0x600, 0x680));
+				System.out.println("");
+				System.out.println(MESSAGE_ID+cpu.P.printStatus());
+				System.out.println(MESSAGE_ID+cpu.dumpStack(ram));
 			}
 
 		});
 		t.start();
 
+		
 		// FROM HERE IMPLEMENT THE LOOP FOR THE VIRTUAL MACHINE WHICH
 		// CONSTITUTES THE INTERFACE BETWEEN THE REAL HARDWARE AND THE
 		// VM AND TO THE ATTACHED PROCESSOR....
@@ -138,6 +142,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		// WAIT FOR AN 'OF' KEY WHICH ENDED THE EMULATION OR AN
 		// INTERRUPT NOTIFING THE PROCESSOR.....
 
+		
 	}
 
 	/**
@@ -209,14 +214,12 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		switch (a) {
 
 		// Writes a string stored in ram to the console
-		// x=low
-		// y=high
+		// 
 		// jsr PRINT
 		case PRINT:
-			low = this.cpu.getX();
-			high = this.cpu.getY();
+			low = cpu.unsignedByte(this.ram[POINTER]);
+			high = cpu.unsignedByte(this.ram[POINTER+1]);
 			address = low + 256 * high;
-
 			i = 0;
 
 			while ((c = (char) this.ram[address + i++]) != CRLF && c != CR)

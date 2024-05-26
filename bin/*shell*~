@@ -1,0 +1,199 @@
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+bash-3.2$ s
+bash: s: command not found
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: 
+In bios.asm, line 8--
+ Error: Symbol 'EQU' already defined!
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: 
+In bios.asm, line 8--
+ Error: Symbol 'EQU' already defined!
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 303 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0625 (38 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 306 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0628 (41 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 312 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-062e (47 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 59--
+ Warning: Probably shouldn't be surrounded by '
+Success. (1 warnings)
+
+Assembly successful
+  Compiled 317 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0633 (52 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 59--
+ Warning: Probably shouldn't be surrounded by '
+Success. (1 warnings)
+
+Assembly successful
+  Compiled 319 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0635 (54 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 59--
+ Warning: Probably shouldn't be surrounded by '
+Success. (1 warnings)
+
+Assembly successful
+  Compiled 316 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0632 (51 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 312 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-062e (47 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 315 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0631 (50 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: Success. (0 warnings)
+
+Assembly successful
+  Compiled 317 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0633 (52 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 59--
+ Warning: Probably shouldn't be surrounded by '
+Success. (1 warnings)
+
+Assembly successful
+  Compiled 316 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0632 (51 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+Success. (1 warnings)
+
+Assembly successful
+  Compiled 320 bytes (~0k)
+    Block: 0100-01fe (255 bytes)
+    Block: 0600-0636 (55 bytes)
+    Block: 0fa0-0fa2 (3 bytes)
+    Block: 1f40-1f42 (3 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ 

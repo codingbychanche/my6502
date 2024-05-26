@@ -1,63 +1,209 @@
-	;; Test BIOS for 6502 type processors.
+	;; Test BIOS for 6502 type processors
+	;; for a virtual test- machine.
 	;;
 	;; RetroZock 04/2024	
 
+	textout= 4000 		; OS routine emulating text output
+	pointer= 7000		; Generic pointer
+	input= 	8000		; OS routine reading user input from console
+	buffer= 9000	 	; User Input is stored here.
 
-	;; System equates	
-	EQU textout=4000 	; OS routine emulating text output
+	CRLF= $9B		; Carriage return and Linefeed
+	LF= $9C			; Linefeed
 	
-	
-	;; Stack
+	;; Stack		; 6502 Stack starts here...
 	*=$0100
-	.BYTE $aa,$bb,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
 
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0,0,0,0,0,0
-	.BYTE 0,0,0,0,0
-
+	;; --------------------------------------------------------------------------
 	;; Start of the operating system
 	;;
 start:	*=$0600
-
-	;; Demo of an os routine
-	;; 	
-	ldx #<text
-	ldy #>text
+	
+	;; Say hello. Print Start message
+	;;
+	lda #<text
+	sta pointer
+	lda #>text
+	sta pointer+1
 	jsr print
-	brk
+
+	;; Get command from console
+	;;
+
+loop:
+	lda #<prompt
+	sta pointer
+	lda #>prompt
+	sta pointer+1
+	jsr print
+	
+	ldx #<buffer
+	ldy #>buffer
+	jsr input
+	
+evaluate:
+	cpx #1			; We have 1 char commands....
+	bne error 
+	
+	lda buffer
+	cmp #'q' 		; Leave
+	beq  out
+
+	cmp #'d'		; Dump memmory contents
+	bne h
+	jsr dump
+
+	lda #<line
+	sta pointer
+	lda #>line
+	sta pointer+1
+	jsr print 
+	jmp loop
+h:	
+	cmp #'h'		; Hex converter
+	bne error		; Last command does not match => error
+	lda #169		; Number to convert
+	jsr tohex
+	lda #<num
+	sta pointer
+	lda #>num
+	sta pointer+1
+	jsr print 
+	
+	jmp loop
+error:		
+	lda #<wrgcom
+	sta pointer
+	lda #>wrgcom
+	sta pointer+1
+	jsr print
+goon:	
+	jmp loop		; Main loop
+
+	;; Leave
+	;; 
+out:	
+	brk			; Leave emu...
+
+	;; --------------------------------------------------------------------------
+	;; 
+	;; bin to hex converter
+	;; Converts a 8 bit integer to hex
+	;;
+	;; a  integer to convert
+tohex:
+	sta int			
+
+	lda int
+	lsr			; Divide num by 16 to get ones...
+	lsr
+	lsr
+	lsr
+	tax			; now get first digit
+	lda hex,x		; Ascii
+	sta num			; Save first digit, a= ones in binary
+
+	txa 			;; Tens=int-(a(ones) * 16)
+	asl
+	asl
+	asl
+	asl
+	sta sav
+	sec
+	lda int			; Get number to convert
+	sbc sav			; Calc tens
+	tax
+	lda hex,x		; Get diget
+	sta num+1
+	rts
+
+int:	.BYTE 0 		; Integer to convert
+num:	.BYTE 0,0," ",LF	; hex in ascii
+hex:	.BYTE "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"
+sav:	.BYTE 0			; Temporary
+	
+	;; Dump memory contents
+	;;
+dump:	
+	lda #<dtext
+	sta pointer
+	lda #>dtext
+	sta pointer+1
+	jsr print 		; Debbuging
+	rts
+	
+	ldy #8
+	ldx #0
+o1:
+	lda $0600,x	
+	jsr tohex
+
+	lda num
+	sta line,x
+	inx
+	lda num+1
+	sta line,x
+	dey
+	bne o1
+
+	rts
+line:
+	.BYTE 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,CRLF
+	.BYTE 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	
+
+	
+dtext:	
+	.BYTE "dump:"
+	.BYTE CRLF
 text:
-	.BYTE "HALLO DU"
-	.BYTE $9b
+	.BYTE "6502 Emulator, 05/2024 BF"
+	.BYTE CRLF
+
+prompt:	
+	.BYTE ">"
+	.BYTE LF
+wrgcom:
+	.BYTE "Not a valid command...."
+	.BYTE CRLF
 
 	;; Some demo os routines
 	;; 
+
+	;; Write text to console
+	;; 
 	*=textout
-print:	
-	lda #255 		; Not much to do here. Just for debbuging 
-	rts			; purposes. Output is done by VM
+print:
+	;; At this point the real hardware would contain
+	;; code taking care of the user input....
+	;; For the vm this is merly a placeholder.
+	;; At this point the emulator calls th apropiate
+	;; routine of the vm and returns to execute the next command...
+	rts
+
+	;; Reads a string from console
+	;; Returns in x=length of string.
+	*=input
+input:
+	;; At this point the real hardware would contain
+	;; code taking care of the user input....
+	;; For the vm this is merly a placeholder.
+	;; At this point the emulator calls th apropiate
+	;; routine of the vm and returns to execute the next command...	
+	ldx #0
+l:
+	lda buffer,x		; Get lenght of string
+	cmp #CRLF
+	beq o
+	inx
+	jmp l
+o:	
+	rts			; Length of string is stored in x
+
+	;; Text buffer pointer for in/ out routines
+	;; 
+	*=pointer
+	.BYTE 0			; Address of textbuffer
+	.BYTE 0
 	
 	;; 6502 Interrupt vector table
 	;;

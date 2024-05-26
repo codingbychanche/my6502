@@ -11,7 +11,9 @@ public class Cpu_6502 {
 
 	private static final int LOW = 0;
 	private static final int HIGH = 1;
-
+	private static final String MESSAGE_ID="[6502_STATE]";
+	
+	
 	//
 	// 6502 address space
 	//
@@ -63,9 +65,9 @@ public class Cpu_6502 {
 	//
 	// Registers
 	//
-	int a, x, y; // Only 8- Bit's are used. They are infact 8 Bit registers
-	int pc; // Programm counter always points to the next command to be executed
-	int s = -1; // Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
+	int a, x, y; 	// Only 8- Bit's are used. They are infact 8 Bit registers
+	int pc; 		// Programm counter always points to the next command to be executed
+	int s = -1; 	// Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
 
 	// TODO: This is a workaround until hardware/ software interrupts are
 	// implemented and working correctly. This is set to true, when a
@@ -107,9 +109,7 @@ public class Cpu_6502 {
 			byte s = (byte) (N * 128 + V * 64 + U * 32 + B * 16 + D * 8 + I * 4 + Z * 2 + C * 1);
 			return s;
 		}
-	}
-
-	public ProcessorStatus P;
+	} public ProcessorStatus P;
 
 	/**
 	 * A new 6502- Processor.
@@ -243,6 +243,7 @@ public class Cpu_6502 {
 			// Get address from irq- vector in ram and set pc accordimngly....
 			// FFFE pcl FFFF pch
 			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
+			
 
 			break;
 
@@ -413,6 +414,54 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+			
+			// tay
+			// n,z
+			case 0xa8:
+
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tay ";
+
+				this.y = this.a;
+
+				this.vt.getComandExecuted(com);
+
+				if (this.y == 0)
+					P.Z = 1;
+				else
+					P.Z = 0;
+
+				if (this.y > 127)
+					P.N = 1;
+				else
+					P.N = 0;
+
+				this.pc++;
+
+				break;
+				
+				// tya
+				// n,z
+				case 0x98:
+
+					com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tya ";
+
+					this.a = this.y;
+
+					this.vt.getComandExecuted(com);
+
+					if (this.a == 0)
+						P.Z = 1;
+					else
+						P.Z = 0;
+
+					if (this.a > 127)
+						P.N = 1;
+					else
+						P.N = 0;
+
+					this.pc++;
+
+					break;
 
 		// ldx #b
 		// Z,N Flags
@@ -466,14 +515,14 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
-			
+
 		// tax
 		// n,z
 		case 0xaa:
 
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tax ";
 
-			this.x=this.a;
+			this.x = this.a;
 
 			this.vt.getComandExecuted(com);
 
@@ -509,6 +558,29 @@ public class Cpu_6502 {
 
 			this.vt.getComandExecuted(String.format("$%04x", this.pc)
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " dex");
+			this.pc++;
+
+			break;
+
+		// txa
+		// z,n
+		case 0x8a:
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " txa ";
+
+			this.a = this.x;
+
+			this.vt.getComandExecuted(com);
+
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
 			this.pc++;
 
 			break;
@@ -689,8 +761,6 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
-			
-			
 
 		// sta xxxx Absolute
 		//
@@ -777,6 +847,7 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+
 		// cpy #b
 		// c,z,n
 		case 0xc0:
@@ -810,6 +881,7 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
+
 		// adc
 		// Carry, overvlow, negative and zero flag
 		case 0x69:
@@ -848,6 +920,84 @@ public class Cpu_6502 {
 				// this.P.V = 0;
 				// else
 				// this.P.V = 1;
+
+			}
+
+			// sbc #nn
+			// Carry, overvlow, negative and zero flag
+			case 0xe9:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " sbc #";
+			this.pc++;
+			this.vt.getComandExecuted(com + String.format("$%02x", this.ram[pc]));
+
+			// BCD?
+			if (this.P.D == 1) {
+				// TODO Insert adc BCD- mode...
+
+			} else {
+				// Non BCD
+				// Sub with carry
+				// TODO Debug Overflow flag.....
+
+				this.a = this.a - unsignedByte(this.ram[pc]);
+
+				if (this.a == 0) {
+					this.P.Z = 1;
+					this.P.N = 0;
+				} else
+					this.P.Z = 0;
+
+				if (this.a < 0) {
+					this.a = 255 + (this.a + this.P.C);
+					this.P.C = 0;
+					this.P.Z = 1;
+					this.P.N = 0;
+
+				}
+
+			}
+
+			pc++;
+
+			break;
+
+		// sbc nnnn
+		// Carry, overvlow, negative and zero flag
+		case 0xed:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " sbc ";
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+
+			// BCD?
+			if (this.P.D == 1) {
+				// TODO Insert adc BCD- mode...
+
+			} else {
+				// Non BCD
+				// Sub with carry
+				// TODO Debug Overflow flag.....
+
+				this.a = this.a - unsignedByte(this.ram[address]);
+
+				if (this.a == 0) {
+					this.P.Z = 1;
+					this.P.N = 0;
+				} else
+					this.P.Z = 0;
+
+				if (this.a < 0) {
+					this.a = 255 + (this.a + this.P.C);
+					this.P.C = 0;
+					this.P.Z = 1;
+					this.P.N = 0;
+
+				}
 
 			}
 
@@ -948,9 +1098,11 @@ public class Cpu_6502 {
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address) + " // " + this.dumpStack(ram));
 
-			vt.jmpAddressTrap(address);
+			
 			this.pc = address; // jump to subroutine
 
+			vt.jmpAddressTrap(address);
+			
 			break;
 
 		// rts
@@ -1001,16 +1153,42 @@ public class Cpu_6502 {
 		case 0x4a:
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lsr ";
 
-			if ((this.a & 1)==1)	// lsb is shifted into the carry
-					this.P.C=1;
+			if ((this.a & 1) == 1) // lsb is shifted into the carry
+				this.P.C = 1;
 			else
-				this.P.C=0;
-			
+				this.P.C = 0;
+
 			this.a = this.a >> 1;
 
-			
 			this.P.N = 0; // Result of a lsr is always positive
-			
+
+			if (this.a == 0)
+				this.P.Z = 1;
+			else
+				this.P.Z = 0;
+
+			this.vt.getComandExecuted(com);
+			this.pc++;
+
+			break;
+
+		// asl
+		// Shifts all bits of the accu to the righ. The rightmost bit
+		// is deleted and the carry set.
+		//
+		// N,Z,C
+		case 0x0a:
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " asl ";
+
+			if ((this.a & 0xff) == 1) // lsb is shifted into the carry
+				this.P.C = 1;
+			else
+				this.P.C = 0;
+
+			this.a = this.a << 1;
+
+			this.P.N = 0; // Result of a lsr is always positive
+
 			if (this.a == 0)
 				this.P.Z = 1;
 			else
@@ -1024,7 +1202,7 @@ public class Cpu_6502 {
 	}
 
 	/**
-	 * HHigh byte part of an 16- bit integer
+	 * High byte part of an 16- bit integer
 	 * 
 	 * @param integer 16- bit integer
 	 * @return High byte part of integer passed
@@ -1130,6 +1308,10 @@ public class Cpu_6502 {
 
 	public int unsignedByte(byte b) {
 		return b & 0xff;
+	}
+	
+	public byte[] getRam() {
+		return this.ram;
 	}
 
 	/**
