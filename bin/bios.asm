@@ -27,11 +27,15 @@ start:	*=$0600
 	sta pointer+1
 	jsr print
 
+	jsr test
+	jsr t2
+	lda #$11
+	brk
+
 	;; Get command from console
 	;;
 
-loop:
-	lda #<prompt
+loop:	lda #<prompt
 	sta pointer
 	lda #>prompt
 	sta pointer+1
@@ -85,6 +89,16 @@ goon:
 out:	
 	brk			; Leave emu...
 
+
+test:	lda #255
+	sta 4800
+	rts
+
+t2:	lda #128
+	sta 4800
+	rts
+
+	
 	;; --------------------------------------------------------------------------
 	;; 
 	;; bin to hex converter
@@ -92,9 +106,11 @@ out:
 	;;
 	;; a  integer to convert
 tohex:
+
 	sta int			
 
 	lda int
+
 	lsr			; Divide num by 16 to get ones...
 	lsr
 	lsr
@@ -115,13 +131,14 @@ tohex:
 	tax
 	lda hex,x		; Get diget
 	sta num+1
+	
 	rts
 
 int:	.BYTE 0 		; Integer to convert
 num:	.BYTE 0,0," ",LF	; hex in ascii
 hex:	.BYTE "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"
 sav:	.BYTE 0			; Temporary
-	
+
 	;; Dump memory contents
 	;;
 dump:	

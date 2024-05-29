@@ -17,7 +17,7 @@ import java.util.Scanner;
  */
 public class VirtualMachine implements VirtualMachineReceiver {
 
-	private static final boolean DEBUG = true;
+	private static final boolean DEBUG = false;
 	private static final String MESSAGE_ID="[VIRTUAL_MACHINE]";
 	
 	private byte[] ram;
@@ -118,7 +118,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	public void run(long clockSpeed) {
 		this.clockSpeed = clockSpeed;
 
-		System.out.println(MESSAGE_ID+"STARTING VM (" + cpu.cpuTypeLiteral + ")");
+		System.out.println("\\e[1mBold"+MESSAGE_ID+"STARTING VM (" + cpu.cpuTypeLiteral + ")");
 
 		Thread t = new Thread(new Runnable() {
 
@@ -191,8 +191,10 @@ public class VirtualMachine implements VirtualMachineReceiver {
 	 */
 	@Override
 	public void getComandExecuted(String s) {
-		if (DEBUG)
+		if (DEBUG) {
+			System.out.println();
 			System.out.println(s);
+		}
 	}
 
 	/**
@@ -209,7 +211,7 @@ public class VirtualMachine implements VirtualMachineReceiver {
 		char c;
 
 		if (DEBUG)
-			System.out.println("====>>> jmp trapped =>" + a);
+			System.out.println(MESSAGE_ID+"====>>> jmp trapped =>" + a);
 
 		switch (a) {
 
@@ -227,7 +229,6 @@ public class VirtualMachine implements VirtualMachineReceiver {
 
 			if (c == CRLF)
 				System.out.println();
-
 			break;
 
 		// Waits for user input and stores the

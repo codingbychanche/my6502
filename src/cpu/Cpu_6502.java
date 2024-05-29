@@ -1,5 +1,7 @@
 package cpu;
 
+import java.util.Scanner;
+
 /**
  * Emulates the infamous 8- Bit CPU
  * 
@@ -8,6 +10,9 @@ package cpu;
  */
 public class Cpu_6502 {
 	public static final String cpuTypeLiteral = "MOS 6502";
+	
+	private Cpu_6502 cpu;
+	private long clockSpeed;
 
 	private static final int LOW = 0;
 	private static final int HIGH = 1;
@@ -22,6 +27,8 @@ public class Cpu_6502 {
 
 	//
 	// RAM
+	//
+	// Just remeber! When a byte from ram is to be taken, use the 'unsignedByte' method!
 	//
 	private byte[] ram;
 
@@ -1113,10 +1120,10 @@ public class Cpu_6502 {
 
 			// pull return address from stack
 			//
-			low = ram[START_ADDRESS_OF_STACK - s];
-			s--;
-			high = ram[START_ADDRESS_OF_STACK - s];
-			s--;
+			low = unsignedByte(this.ram[START_ADDRESS_OF_STACK - s]);
+			this.s--;
+			high = unsignedByte(this.ram[START_ADDRESS_OF_STACK - s]);
+			this.s--;
 
 			address = low + 256 * high;
 
@@ -1142,7 +1149,7 @@ public class Cpu_6502 {
 
 			// Inform virtual machine.....
 			vt.jmpAddressTrap(address);
-
+			
 			break;
 
 		// lsr
@@ -1200,6 +1207,7 @@ public class Cpu_6502 {
 			break;
 		}
 	}
+
 
 	/**
 	 * High byte part of an 16- bit integer

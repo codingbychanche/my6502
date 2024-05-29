@@ -11,6 +11,16 @@
 	CRLF= $9B		; Carriage return and Linefeed
 	LF= $9C			; Linefeed
 	
+
+
+	.MACRO linefeed
+	lda #<feed
+	sta pointer
+	lda #>feed
+	sta pointer+1
+	jsr print
+	.ENDM
+
 	;; Stack		; 6502 Stack starts here...
 	*=$0100
 
@@ -26,6 +36,7 @@ start:	*=$0600
 	lda #>text
 	sta pointer+1
 	jsr print
+
 
 	;; Get command from console
 	;;
@@ -52,22 +63,20 @@ evaluate:
 	bne h
 	jsr dump
 
-	lda #<line
-	sta pointer
-	lda #>line
-	sta pointer+1
-	jsr print 
+
 	jmp loop
 h:	
 	cmp #'h'		; Hex converter
 	bne error		; Last command does not match => error
 	lda #169		; Number to convert
 	jsr tohex
-	lda #<num
+	
+	lda #<num		; Show result
 	sta pointer
 	lda #>num
 	sta pointer+1
-	jsr print 
+	jsr print
+	linefeed
 	
 	jmp loop
 error:		
@@ -84,6 +93,22 @@ goon:
 out:	
 	brk			; Leave emu...
 
+
+test:	lda #255
+	sta 4800
+	jsr t2
+	rts
+
+t2:	lda #128
+	sta 4800
+	jsr t3
+	rts
+
+t3:	lda #$44
+	sta 4800
+	rts
+
+	
 	;; --------------------------------------------------------------------------
 	;; 
 	;; bin to hex converter
@@ -91,9 +116,16 @@ out:
 	;;
 	;; a  integer to convert
 tohex:
-	sta int			
 
+	sta int			
+	pha
+	txa
+	pha
+	tya
+	pha
+	
 	lda int
+
 	lsr			; Divide num by 16 to get ones...
 	lsr
 	lsr
@@ -114,14 +146,20 @@ tohex:
 	tax
 	lda hex,x		; Get diget
 	sta num+1
-	jsr print
+	
+	pla
+	tya
+	pla
+	txa
+	pla
+	
 	rts
 
 int:	.BYTE 0 		; Integer to convert
 num:	.BYTE 0,0," ",LF	; hex in ascii
 hex:	.BYTE "0","1","2","3","4","5","6","7","8","9","A","B","C","D","E","F"
 sav:	.BYTE 0			; Temporary
-	
+
 	;; Dump memory contents
 	;;
 dump:	
@@ -129,28 +167,27 @@ dump:
 	sta pointer
 	lda #>dtext
 	sta pointer+1
-	jsr print 		; Debbuging
-	rts
+	jsr print 
+
 	
-	ldy #8
+	ldy #100
 	ldx #0
 o1:
 	lda $0600,x	
 	jsr tohex
 
-	lda num
-	sta line,x
+	lda #<num
+	sta pointer
+	lda #>num
+	sta pointer+1
+	jsr print 
 	inx
-	lda num+1
-	sta line,x
 	dey
 	bne o1
 
+	linefeed
+	
 	rts
-line:
-	.BYTE 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,CRLF
-	.BYTE 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0	
-
 	
 dtext:	
 	.BYTE "dump:"
@@ -166,6 +203,10 @@ wrgcom:
 	.BYTE "Not a valid command...."
 	.BYTE CRLF
 
+	;; If nedded, use :-)
+feed:
+	.BYTE "   ",CRLF
+	
 	;; Some demo os routines
 	;; 
 
