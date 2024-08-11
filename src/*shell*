@@ -1,0 +1,2743 @@
+
+The default interactive shell is now zsh.
+To update your account to use zsh, please run `chsh -s /bin/zsh`.
+For more details, please visit https://support.apple.com/kb/HT208050.
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 63--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 66--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 347 bytes (~0k)
+    Block: 0600-0745 (326 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+Equates:
+ BUFFER: 2328		 CRLF: 009b		 INPUT: 1f40		
+ LF: 009c		 POINTER: 1b58		 TEXTOUT: 0fa0		
+
+
+Symbol table:
+DTEXT: 070e		DUMP: 06d8		ERROR: 0667		
+EVALUATE: 062c		FEED: 0748		GOON: 0674		
+H: 0641		HEX: 06c7		I: 0617		
+INPUT: 1f40		INT: 06c2		L: 1f42		
+LOOP: 0618		NUM: 06c3		O: 1f4d		
+O1: 06e9		OUT: 0677		PRINT: 0fa0		
+PROMPT: 072e		SAV: 06d7		START: 0100		
+T2: 0681		T3: 068a		TEST: 0678		
+TEXT: 0714		TOHEX: 0690		WRGCOM: 0730		
+
+
+In bios.asm, line 45--
+ Error: Unknown symbol ''
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+Equates:
+ BUFFER: 2328		 CRLF: 009b		 INPUT: 1f40		
+ LF: 009c		 POINTER: 1b58		 TEXTOUT: 0fa0		
+
+
+Symbol table:
+DTEXT: 070e		DUMP: 06d8		ERROR: 0667		
+EVALUATE: 062c		FEED: 0748		GOON: 0674		
+H: 0641		HEX: 06c7		I: 0617		
+INPUT: 1f40		INT: 06c2		L: 1f42		
+LOOP: 0618		NUM: 06c3		O: 1f4d		
+O1: 06e9		OUT: 0677		PRINT: 0fa0		
+PROMPT: 072e		SAV: 06d7		START: 0100		
+T2: 0681		T3: 068a		TEST: 0678		
+TEXT: 0714		TOHEX: 0690		WRGCOM: 0730		
+
+
+In bios.asm, line 45--
+ Error: Unknown symbol ''
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 65--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 75--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 71--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 71--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 40--
+ Error: Illegal zero page reference.
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 72--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 355 bytes (~0k)
+    Block: 0600-074d (334 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 361 bytes (~0k)
+    Block: 0600-0753 (340 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 361 bytes (~0k)
+    Block: 0600-0753 (340 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 361 bytes (~0k)
+    Block: 0600-0753 (340 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 357 bytes (~0k)
+    Block: 0600-074f (336 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 348 bytes (~0k)
+    Block: 0600-0746 (327 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 71--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 350 bytes (~0k)
+    Block: 0600-0748 (329 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 71--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 350 bytes (~0k)
+    Block: 0600-0748 (329 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 72--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 72--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 352 bytes (~0k)
+    Block: 0600-074a (331 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 80--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 354 bytes (~0k)
+    Block: 0600-074c (333 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 44--
+ Error: Illegal addressing mode.
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 44--
+ Error: Illegal addressing mode.
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 71--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 81--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 356 bytes (~0k)
+    Block: 0600-074e (335 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 361 bytes (~0k)
+    Block: 0600-0753 (340 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 75--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 85--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 366 bytes (~0k)
+    Block: 0600-0758 (345 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 75--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 78--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 85--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 366 bytes (~0k)
+    Block: 0600-0758 (345 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 348 bytes (~0k)
+    Block: 0600-0746 (327 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 348 bytes (~0k)
+    Block: 0600-0746 (327 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 353 bytes (~0k)
+    Block: 0600-074b (332 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 355 bytes (~0k)
+    Block: 0600-074d (334 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 366 bytes (~0k)
+    Block: 0600-0758 (345 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 367 bytes (~0k)
+    Block: 0600-0759 (346 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 368 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 368 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 368 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 370 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 58--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 61--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 370 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 380 bytes (~0k)
+    Block: 0600-0764 (357 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2$ emacs compileos.sh
+bash: emacs: command not found
+bash-3.2$ ./comp
+bash: ./comp: No such file or director
+bash-3.2$ ls
+Main.java	bios.asm	compileos.sh	test.65o
+bios.65o	bios.asm~	cpu		test.asm
+bash-3.2$ ./compileos.sh
+bash: ./compileos.sh: Permission denied
+bash-3.2$ /opt/atasm109/atasm bios.asm
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 380 bytes (~0k)
+    Block: 0600-0764 (357 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ cp bios.65o ../bin/
+bash-3.2    chmod 777 compileos.sh 
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 378 bytes (~0k)
+    Block: 0600-0764 (357 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 65--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 68--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 75--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 374 bytes (~0k)
+    Block: 0600-0760 (353 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 66--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 376 bytes (~0k)
+    Block: 0600-0762 (355 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 66--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 376 bytes (~0k)
+    Block: 0600-0762 (355 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 66--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 376 bytes (~0k)
+    Block: 0600-0762 (355 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 368 bytes (~0k)
+    Block: 0600-075a (347 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 366 bytes (~0k)
+    Block: 0600-0758 (345 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+Equates:
+ BUFFER: 2328		 CRLF: 009b		 INPUT: 1f40		
+ LF: 009c		 POINTER: 1b58		 TEXTOUT: 0fa0		
+
+
+Symbol table:
+CHAR: 073a		DTEXT: 0734		DUMP: 06cd		
+ERROR: 065c		EVALUATE: 0621		FEED: 0770		
+GOON: 0669		H: 0636		HEX: 06bc		
+INPUT: 1f40		INT: 06b7		L: 1f42		
+LL: 06e4		LLL: 06e6		LLLL: 06ff		
+LOOP: 060d		NUM: 06b8		O: 1f4d		
+OUT: 066c		PRINT: 0fa0		PROMPT: 0756		
+SAV: 06cc		START: 0100		T2: 0676		
+T3: 067f		TEST: 066d		TEXT: 073c		
+TOHEX: 0685		WRGCOM: 0758		
+
+In bios.asm, line 229--
+ Error: Unknown symbol 'CR'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 393 bytes (~0k)
+    Block: 0600-0773 (372 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 393 bytes (~0k)
+    Block: 0600-0773 (372 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+Success. (3 warnings)
+
+Assembly successful
+  Compiled 393 bytes (~0k)
+    Block: 0600-0773 (372 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 199--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 403 bytes (~0k)
+    Block: 0600-077d (382 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 200--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 405 bytes (~0k)
+    Block: 0600-077f (384 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 200--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 405 bytes (~0k)
+    Block: 0600-077f (384 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 200--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 405 bytes (~0k)
+    Block: 0600-077f (384 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 64--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 200--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 405 bytes (~0k)
+    Block: 0600-077f (384 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 66--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 69--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 202--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 411 bytes (~0k)
+    Block: 0600-0785 (390 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 67--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 70--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 203--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+./compileos.sh 
+Assembly successful
+  Compiled 411 bytes (~0k)
+    Block: 0600-0785 (390 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 80--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 90--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 216--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 431 bytes (~0k)
+    Block: 0600-0799 (410 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 215--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 431 bytes (~0k)
+    Block: 0600-0799 (410 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 215--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 429 bytes (~0k)
+    Block: 0600-0797 (408 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 214--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 215--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 431 bytes (~0k)
+    Block: 0600-0799 (410 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 215--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 431 bytes (~0k)
+    Block: 0600-0799 (410 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 213--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 427 bytes (~0k)
+    Block: 0600-0795 (406 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 213--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 427 bytes (~0k)
+    Block: 0600-0795 (406 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ 
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 89--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 218--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 435 bytes (~0k)
+    Block: 0600-079d (414 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 80--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 90--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 219--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 436 bytes (~0k)
+    Block: 0600-079e (415 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 89--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 218--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 435 bytes (~0k)
+    Block: 0600-079d (414 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 89--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 218--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 436 bytes (~0k)
+    Block: 0600-079e (415 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 79--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 89--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 218--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 436 bytes (~0k)
+    Block: 0600-079e (415 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled tpo binary file 'bios.65o'
+bash-3.2$ 
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 427 bytes (~0k)
+    Block: 0600-0795 (406 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 427 bytes (~0k)
+    Block: 0600-0795 (406 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./co ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 212--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./com ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ 
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ . ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 425 bytes (~0k)
+    Block: 0600-0793 (404 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 74--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 77--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+Equates:
+ BUFFER: 2328		 CRLF: 009b		 INPUT: 1f40		
+ LF: 009c		 POINTER: 1b58		 TEXTOUT: 0fa0		
+
+
+Symbol table:
+BRIGGER: 0614		CHAR: 0764		DTEXT: 075e		
+DUMP: 06e1		ERROR: 0670		EVALUATE: 062b		
+FEED: 079a		G1: 0721		G2: 0719		
+GG: 0724		GOON: 067d		H: 0640		
+HEX: 06d0		INPUT: 1f40		INT: 06cb		
+L: 1f42		LL: 06f8		LLL: 06fa		
+LLLL: 0713		LOOP: 0617		NUM: 06cc		
+O: 1f4d		OUT: 0680		PRINT: 0fa0		
+PROMPT: 0780		SAV: 06e0		START: 0100		
+T2: 068a		T3: 0693		TEST: 0681		
+TEXT: 0766		TOHEX: 0699		WRGCOM: 0782		
+
+
+In bios.asm, line 54--
+ Error: Unknown symbol 'BIGGER'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 81--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 84--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 91--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 218--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 433 bytes (~0k)
+    Block: 0600-079b (412 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 85--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 92--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 219--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 435 bytes (~0k)
+    Block: 0600-079d (414 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 82--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 85--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 92--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 219--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 435 bytes (~0k)
+    Block: 0600-079d (414 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 426 bytes (~0k)
+    Block: 0600-0794 (405 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 211--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 426 bytes (~0k)
+    Block: 0600-0794 (405 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ In bios.asm, line 73--
+bash: In: command not found
+bash-3.2$ 
+bash-3.2$ 
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ./compileos.sh 
+ATasm 1.09 (A mostly Mac65 compatible 6502 cross-assembler)
+Pass 1: Success. (0 warnings)
+Pass 2: 
+In bios.asm, line 73--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 76--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 83--
+ Warning: Probably shouldn't be surrounded by '
+
+In bios.asm, line 210--
+ Warning: Probably shouldn't be surrounded by '
+Success. (4 warnings)
+
+Assembly successful
+  Compiled 423 bytes (~0k)
+    Block: 0600-0791 (402 bytes)
+    Block: 0fa0-0fa0 (1 bytes)
+    Block: 1b58-1b59 (2 bytes)
+    Block: 1f40-1f4d (14 bytes)
+    Block: fffa-fffd (4 bytes)
+
+Compiled to binary file 'bios.65o'
+bash-3.2$ ls
+#*shell*#	Main.java	bios.asm~	test.65o
+*shell*		bios.65o	compileos.sh	test.asm
+*shell*~	bios.asm	cpu
+bash-3.2$ 

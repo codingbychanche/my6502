@@ -11,14 +11,25 @@
 	CRLF= $9B		; Carriage return and Linefeed
 	LF= $9C			; Linefeed
 	
-
-
 	.MACRO linefeed
+	pha
+	txa
+	pha
+	tya
+	pha
+
 	lda #<feed
 	sta pointer
 	lda #>feed
 	sta pointer+1
 	jsr print
+
+	pla
+	tay
+	pla
+	tax
+	pla
+
 	.ENDM
 
 	;; Stack		; 6502 Stack starts here...
@@ -37,7 +48,10 @@ start:	*=$0600
 	sta pointer+1
 	jsr print
 
+	;; Sandbox
+	;;
 
+	
 	;; Get command from console
 	;;
 
@@ -168,30 +182,70 @@ dump:
 	lda #>dtext
 	sta pointer+1
 	jsr print 
-
 	
-	ldy #100
-	ldx #0
-o1:
-	lda $0600,x	
+	lda #<$0630
+	sta 200
+	lda #>$0630
+	sta 201
+	ldx #100
+ll:	
+	ldy #0	
+lll:	lda (200),y		; Show hex
 	jsr tohex
-
 	lda #<num
 	sta pointer
 	lda #>num
 	sta pointer+1
-	jsr print 
-	inx
-	dey
-	bne o1
+	jsr print
+	iny
+	cpy #10
+	bne lll
+
+	ldy #0	
+llll:
+	lda (200),y		; Show ascii
+	cmp #128 		; < 128
+	bcc g1
+
+	lda # '.'		; >127 nothing to show..
+	sta char
+	jmp gg
+g1:
+	sta char
+gg:
+	lda #<char
+	sta pointer 
+	lda #>char
+	sta pointer+1
+	jsr print
+	iny
+	cpy #10
+	bne llll
 
 	linefeed
+
+	clc
+	lda 200
+	adc #10
+	sta 200
+	lda 201
+	adc #0
+	sta 201		
+	dex
+	bne ll
 	
 	rts
+
+
+
 	
 dtext:	
 	.BYTE "dump:"
 	.BYTE CRLF
+char:
+	.BYTE 0,LF
+	
+
 text:
 	.BYTE "6502 Emulator, 05/2024 BF"
 	.BYTE CRLF
@@ -205,7 +259,7 @@ wrgcom:
 
 	;; If nedded, use :-)
 feed:
-	.BYTE "   ",CRLF
+	.BYTE " ",CRLF
 	
 	;; Some demo os routines
 	;; 

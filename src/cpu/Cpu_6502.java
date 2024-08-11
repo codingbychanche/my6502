@@ -10,15 +10,14 @@ import java.util.Scanner;
  */
 public class Cpu_6502 {
 	public static final String cpuTypeLiteral = "MOS 6502";
-	
+
 	private Cpu_6502 cpu;
 	private long clockSpeed;
 
 	private static final int LOW = 0;
 	private static final int HIGH = 1;
-	private static final String MESSAGE_ID="[6502_STATE]";
-	
-	
+	private static final String MESSAGE_ID = "[6502_STATE]";
+
 	//
 	// 6502 address space
 	//
@@ -28,7 +27,8 @@ public class Cpu_6502 {
 	//
 	// RAM
 	//
-	// Just remeber! When a byte from ram is to be taken, use the 'unsignedByte' method!
+	// Just remeber! When a byte from ram is to be taken, use the 'unsignedByte'
+	// method!
 	//
 	private byte[] ram;
 
@@ -72,9 +72,9 @@ public class Cpu_6502 {
 	//
 	// Registers
 	//
-	int a, x, y; 	// Only 8- Bit's are used. They are infact 8 Bit registers
-	int pc; 		// Programm counter always points to the next command to be executed
-	int s = -1; 	// Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
+	int a, x, y; // Only 8- Bit's are used. They are infact 8 Bit registers
+	int pc; // Programm counter always points to the next command to be executed
+	int s = -1; // Stack pointer (Stack is between $0100 and $01ff which is the top of stack)
 
 	// TODO: This is a workaround until hardware/ software interrupts are
 	// implemented and working correctly. This is set to true, when a
@@ -116,7 +116,9 @@ public class Cpu_6502 {
 			byte s = (byte) (N * 128 + V * 64 + U * 32 + B * 16 + D * 8 + I * 4 + Z * 2 + C * 1);
 			return s;
 		}
-	} public ProcessorStatus P;
+	}
+
+	public ProcessorStatus P;
 
 	/**
 	 * A new 6502- Processor.
@@ -250,7 +252,6 @@ public class Cpu_6502 {
 			// Get address from irq- vector in ram and set pc accordimngly....
 			// FFFE pcl FFFF pch
 			this.pc = this.ram[this.IRQ_VECTOR] * 256 + this.ram[this.IRQ_VECTOR + 1];
-			
 
 			break;
 
@@ -421,54 +422,54 @@ public class Cpu_6502 {
 			this.pc++;
 
 			break;
-			
-			// tay
-			// n,z
-			case 0xa8:
 
-				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tay ";
+		// tay
+		// n,z
+		case 0xa8:
 
-				this.y = this.a;
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tay ";
 
-				this.vt.getComandExecuted(com);
+			this.y = this.a;
 
-				if (this.y == 0)
-					P.Z = 1;
-				else
-					P.Z = 0;
+			this.vt.getComandExecuted(com);
 
-				if (this.y > 127)
-					P.N = 1;
-				else
-					P.N = 0;
+			if (this.y == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
 
-				this.pc++;
+			if (this.y > 127)
+				P.N = 1;
+			else
+				P.N = 0;
 
-				break;
-				
-				// tya
-				// n,z
-				case 0x98:
+			this.pc++;
 
-					com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tya ";
+			break;
 
-					this.a = this.y;
+		// tya
+		// n,z
+		case 0x98:
 
-					this.vt.getComandExecuted(com);
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " tya ";
 
-					if (this.a == 0)
-						P.Z = 1;
-					else
-						P.Z = 0;
+			this.a = this.y;
 
-					if (this.a > 127)
-						P.N = 1;
-					else
-						P.N = 0;
+			this.vt.getComandExecuted(com);
 
-					this.pc++;
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
 
-					break;
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
 
 		// ldx #b
 		// Z,N Flags
@@ -656,6 +657,76 @@ public class Cpu_6502 {
 					+ String.format(" $%02x", unsignedByte(this.ram[this.pc])) + " iny");
 			break;
 
+		// inc aaaa
+		// n, z
+		case 0xee:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " inc ";
+
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+			b = unsignedByte(ram[address]);
+			b++;
+
+			if (b > 255)
+				b = 0;
+
+			this.ram[address] = (byte) b;
+
+			if (b == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (b > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
+
+		// dec aaaa
+		// n, z
+		case 0xce:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " dec ";
+
+			this.pc++;
+			low = unsignedByte(this.ram[pc]);
+			this.pc++;
+			high = unsignedByte(this.ram[pc]);
+			address = low + 256 * high;
+
+			this.vt.getComandExecuted(com + String.format("$%04x", address));
+			b = unsignedByte(ram[address]);
+			b--;
+
+			if (b < 0)
+				b = 255;
+
+			this.ram[address] = (byte) b;
+
+			if (b == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (b > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
+
 		// lda #b Immediate
 		// Z,N Flags
 		case 169:
@@ -675,6 +746,7 @@ public class Cpu_6502 {
 				P.N = 1;
 			else
 				P.N = 0;
+
 			this.pc++;
 
 			break;
@@ -694,6 +766,67 @@ public class Cpu_6502 {
 			this.a = unsignedByte(this.ram[address]);
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address));
+
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
+
+		// lda b Zero Page
+		// Z,N Flags
+		case 0xa5:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda ";
+
+			this.pc++;
+
+			address = unsignedByte(this.ram[this.pc]);
+			this.a = unsignedByte(this.ram[address]);
+
+			this.vt.getComandExecuted(com + String.format("$%02x", address));
+
+			if (this.a == 0)
+				P.Z = 1;
+			else
+				P.Z = 0;
+
+			if (this.a > 127)
+				P.N = 1;
+			else
+				P.N = 0;
+
+			this.pc++;
+
+			break;
+
+		// lda (lsb),y indirect y post indexed
+		// loads accu with the contents of (lsb)+(lsb+1)*256
+		// Z,N Flags
+		case 0xb1:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " lda (";
+
+			this.pc++;
+			address = unsignedByte(this.ram[pc]);
+			this.vt.getComandExecuted(com + String.format("$%02x", address) + "),y");
+
+			low = unsignedByte(this.ram[address]);
+			address++;
+			high = unsignedByte(this.ram[address]);
+
+			address = low + 256 * high;
+			address = address + this.y;
+
+			this.a = unsignedByte(this.ram[address]);
 
 			if (this.a == 0)
 				P.Z = 1;
@@ -787,6 +920,21 @@ public class Cpu_6502 {
 
 			break;
 
+		// sta xx Absolute zero page
+		//
+		case 0x85:
+
+			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " sta ";
+			this.pc++;
+			address = unsignedByte(this.ram[pc]);
+			this.ram[address] = (byte) this.a;
+
+			this.vt.getComandExecuted(com + String.format("$%02x", address));
+
+			this.pc++;
+
+			break;
+
 		// cmp #b
 		// c,z,n
 		case 0xc9:
@@ -839,7 +987,7 @@ public class Cpu_6502 {
 				this.P.N = 0;
 			}
 
-			if (diff > 0) {
+			if (diff >0) {
 				this.P.C = 1;
 				this.P.Z = 0;
 				this.P.N = 0;
@@ -889,7 +1037,7 @@ public class Cpu_6502 {
 
 			break;
 
-		// adc
+		// adc #
 		// Carry, overvlow, negative and zero flag
 		case 0x69:
 
@@ -921,6 +1069,7 @@ public class Cpu_6502 {
 					this.P.N = 0;
 
 				}
+
 				// TODO Check behaviour of overflow flag
 				// a< -128 or a> 127
 				// if (this.a > 127 && this.a <= 255)
@@ -930,9 +1079,13 @@ public class Cpu_6502 {
 
 			}
 
-			// sbc #nn
-			// Carry, overvlow, negative and zero flag
-			case 0xe9:
+			this.pc++;
+			
+			break;
+			
+		// sbc #nn
+		// Carry, overvlow, negative and zero flag
+		case 0xe9:
 
 			com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " sbc #";
 			this.pc++;
@@ -965,7 +1118,7 @@ public class Cpu_6502 {
 
 			}
 
-			pc++;
+			this.pc++;
 
 			break;
 
@@ -1033,7 +1186,7 @@ public class Cpu_6502 {
 
 			// What ever the result of the previous instruction was, if it was zero
 			// we do not branch!
-			if (this.P.Z != 1) {
+			if (this.P.Z == 0) {
 
 				// The target address of the branch is now calculated by subtracting/ adding
 				// b from the address of the instruction.
@@ -1049,6 +1202,117 @@ public class Cpu_6502 {
 
 			break;
 
+			// bcc
+			// Branch on carry clear (or, branch on 'less then' when used with cmp
+			// No flags...
+			//
+			// TODO: Check forward branches....
+			case 0x90:
+
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " bcc ";
+
+				// pc already points to the current instruction. Now get the argument.
+				this.pc++;
+				b = this.ram[pc];
+
+				// Currently pc points to the argument, not the instruction
+				// so we have to correct that.
+				b++;
+
+				target = this.pc + b;
+
+				// What ever the result of the previous instruction was, if it was zero
+				// we do not branch!
+				if (this.P.C== 0) {
+
+					// The target address of the branch is now calculated by subtracting/ adding
+					// b from the address of the instruction.
+					this.pc = target;
+
+				}
+				// No branch!
+				else
+					// Next instruction.
+					this.pc++;
+
+				this.vt.getComandExecuted(com + String.format("$%04x", target));
+
+				break;
+
+				// bcs
+				// Branch on carry clear (or, branch on 'less then' when used with cmp
+				// No flags...
+				//
+				// TODO: Check forward branches....
+				case 0xb0:
+
+					com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " bcs ";
+
+					// pc already points to the current instruction. Now get the argument.
+					this.pc++;
+					b = this.ram[pc];
+
+					// Currently pc points to the argument, not the instruction
+					// so we have to correct that.
+					b++;
+
+					target = this.pc + b;
+
+					// What ever the result of the previous instruction was, if it was zero
+					// we do not branch!
+					if (this.P.C== 1) {
+
+						// The target address of the branch is now calculated by subtracting/ adding
+						// b from the address of the instruction.
+						this.pc = target;
+
+					}
+					// No branch!
+					else
+						// Next instruction.
+						this.pc++;
+
+					this.vt.getComandExecuted(com + String.format("$%04x", target));
+
+					break;
+			
+			// bpl
+			// Branch on result not negative.
+			// No flags...
+			//
+			// TODO: Check forward branches....
+			case 0x10:
+
+				com = String.format(String.format("$%04x", this.pc) + " $%02x", unsignedByte(this.ram[this.pc])) + " bpl ";
+
+				// pc already points to the current instruction. Now get the argument.
+				this.pc++;
+				b = this.ram[pc];
+
+				// Currently pc points to the argument, not the instruction
+				// so we have to correct that.
+				b++;
+
+				target = this.pc + b;
+
+				// What ever the result of the previous instruction was, if negative
+				// we do not branch!
+				if (this.P.N == 0) {
+
+					// The target address of the branch is now calculated by subtracting/ adding
+					// b from the address of the instruction.
+					this.pc = target;
+
+				}
+				// No branch!
+				else
+					// Next instruction.
+					this.pc++;
+
+				this.vt.getComandExecuted(com + String.format("$%04x", target));
+
+				break;
+				
 		// beq
 		// Branch on equal.
 		// No flags...
@@ -1105,11 +1369,10 @@ public class Cpu_6502 {
 
 			this.vt.getComandExecuted(com + String.format("$%04x", address) + " // " + this.dumpStack(ram));
 
-			
 			this.pc = address; // jump to subroutine
 
 			vt.jmpAddressTrap(address);
-			
+
 			break;
 
 		// rts
@@ -1149,7 +1412,7 @@ public class Cpu_6502 {
 
 			// Inform virtual machine.....
 			vt.jmpAddressTrap(address);
-			
+
 			break;
 
 		// lsr
@@ -1207,7 +1470,6 @@ public class Cpu_6502 {
 			break;
 		}
 	}
-
 
 	/**
 	 * High byte part of an 16- bit integer
@@ -1317,7 +1579,7 @@ public class Cpu_6502 {
 	public int unsignedByte(byte b) {
 		return b & 0xff;
 	}
-	
+
 	public byte[] getRam() {
 		return this.ram;
 	}
